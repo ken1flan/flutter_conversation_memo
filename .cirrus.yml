@@ -1,0 +1,13 @@
+container:
+  image: cirrusci/flutter:2.0.5
+
+test_task:
+  pub_cache:
+    folder: ~/.pub-cache
+  test_script: |
+    flutter pub get
+    flutter test --reporter json > report.json
+  always:
+    report_artifacts:
+      path: report.json
+      format: flutter
