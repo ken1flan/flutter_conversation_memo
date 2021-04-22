@@ -1,6 +1,13 @@
 container:
   image: cirrusci/flutter:2.0.5
 
+analysis_task:
+  pub_cache:
+    folder: ~/.pub-cache
+  analysis_script: |
+    flutter pub get
+    flutter analyze
+
 test_task:
   pub_cache:
     folder: ~/.pub-cache
