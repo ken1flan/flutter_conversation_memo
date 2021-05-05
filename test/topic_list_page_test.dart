@@ -17,6 +17,6 @@ void main() {
     await tester.tap(find.byIcon(Icons.add));
     await tester.pump();
 
-    expect(find.text('ネタ新規追加', skipOffstage: false), findsOneWidget);
+    expect(find.text('話題の新規作成 | 会話ネタ帳', skipOffstage: false), findsOneWidget);
   });
 }
