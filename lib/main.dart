@@ -1,7 +1,22 @@
+import 'dart:async';
+import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_conversation_memo/topic_list_page.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final Future<Database> database = openDatabase(
+    join(await getDatabasesPath(), 'conversation_database.db'),
+    onCreate: (db, version) {
+      return db.execute(
+        "CREATE TABLE topics(id INTEGER PRIMARY KEY, summary TEXT, memo TEXT, tags_string TEXT, created_at TEXT, updated_at TEXT)",
+      );
+    },
+    version: 1,
+  );
+
   runApp(MyApp());
 }
 
