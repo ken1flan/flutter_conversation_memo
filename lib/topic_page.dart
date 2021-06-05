@@ -1,6 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_conversation_memo/main.dart';
+import 'package:hive/hive.dart';
+import 'package:flutter_conversation_memo/topic.dart';
 
-class TopicPage extends StatelessWidget {
+class TopicPage extends StatefulWidget {
+  final formKey = GlobalKey<FormState>();
+
+  @override
+  _TopicPageState createState() => _TopicPageState();
+}
+
+class _TopicPageState extends State<TopicPage> {
+  String summary;
+  String memo;
+  String tags_string;
+  int created_at;
+  int updated_at;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +41,17 @@ class TopicPage extends StatelessWidget {
               decoration: const InputDecoration(
                   labelText: 'タグ', hintText: 'スペースで区切って入力してください。'),
             ),
+            OutlinedButton(
+              onPressed: onFormSubmit,
+              child: Text('保存'),
+            ),
           ])),
     );
+  }
+
+  void onFormSubmit() {
+    Box<Topic> topicBox = Hive.box<Topic>(topicBoxName);
+    topicBox.add(Topic(summary, memo, tags_string, created_at, updated_at));
+    Navigator.of(context).pop();
   }
 }

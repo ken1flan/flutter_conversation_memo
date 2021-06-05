@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_conversation_memo/topic_list_page.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive/hive.dart';
 
-void main() {
+import 'package:flutter_conversation_memo/topic.dart';
+
+const String topicBoxName = 'topics';
+
+void main() async {
+  await Hive.initFlutter();
+  Hive.registerAdapter(TopicAdapter());
+  await Hive.openBox<Topic>(topicBoxName);
   runApp(MyApp());
 }
 
