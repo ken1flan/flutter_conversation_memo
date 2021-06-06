@@ -25,14 +25,42 @@ class TopicListPage extends StatelessWidget {
                 itemBuilder: (context, index) {
                   Topic currentTopic = box.getAt(index);
                   return Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            SizedBox(height: 5),
-                            Text(currentTopic.summary),
-                          ]),
+                    clipBehavior: Clip.antiAlias,
+                    child: InkWell(
+                      onLongPress: () {
+                        showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (context) {
+                              return AlertDialog(
+                                content: Text(
+                                    '${currentTopic.summary}を消しますが、よろしいですか？'),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.of(context).pop(),
+                                    child: Text('No'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () async {
+                                      await box.deleteAt(index);
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text('Yes'),
+                                  )
+                                ],
+                              );
+                            });
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              SizedBox(height: 5),
+                              Text(currentTopic.summary),
+                            ]),
+                      ),
                     ),
                   );
                 },
@@ -48,7 +76,6 @@ class TopicListPage extends StatelessWidget {
   }
 
   void _createNewTopic(BuildContext context) {
-    // nop
     Navigator.push(
         context,
         MaterialPageRoute(
