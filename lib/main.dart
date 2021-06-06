@@ -5,7 +5,7 @@ import 'package:hive/hive.dart';
 
 import 'package:flutter_conversation_memo/topic.dart';
 
-const String topicBoxName = 'topics';
+const String topicBoxName = 'topicBox';
 
 void main() async {
   await Hive.initFlutter();

@@ -29,6 +29,11 @@ class _TopicPageState extends State<TopicPage> {
             TextField(
               decoration: const InputDecoration(
                   labelText: 'いいたいこと', hintText: 'この話題で言いたいことを短くまとめましょう。'),
+              onChanged: (value) {
+                setState(() {
+                  summary = value;
+                });
+              },
             ),
             TextField(
               decoration: const InputDecoration(
@@ -36,10 +41,20 @@ class _TopicPageState extends State<TopicPage> {
                   hintText:
                       '話題を話すときにチラ見したいことを書きましょう。\n長くしすぎるとスクロールが入って見づらくなるかもしれません。'),
               maxLines: 10,
+              onChanged: (value) {
+                setState(() {
+                  memo = value;
+                });
+              },
             ),
             TextField(
               decoration: const InputDecoration(
                   labelText: 'タグ', hintText: 'スペースで区切って入力してください。'),
+              onChanged: (value) {
+                setState(() {
+                  tags_string = value;
+                });
+              },
             ),
             OutlinedButton(
               onPressed: onFormSubmit,
