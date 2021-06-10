@@ -90,9 +90,12 @@ class _TopicPageState extends State<TopicPage> {
                 });
               },
             ),
-            OutlinedButton(
-              onPressed: onFormSubmit,
-              child: Text('保存'),
+            Padding(
+              padding: const EdgeInsets.only(top: 32),
+              child: ElevatedButton(
+                onPressed: onFormSubmit,
+                child: Text('保存'),
+              ),
             ),
           ])),
     );
