@@ -5,20 +5,51 @@ import 'package:flutter_conversation_memo/topic.dart';
 
 class TopicPage extends StatefulWidget {
   final formKey = GlobalKey<FormState>();
+  final int index;
+
+  TopicPage({this.index});
 
   @override
-  _TopicPageState createState() => _TopicPageState();
+  _TopicPageState createState() => _TopicPageState(index);
 }
 
 class _TopicPageState extends State<TopicPage> {
-  String summary;
-  String memo;
-  String tags_string;
+  Box<Topic> box = Hive.box<Topic>(topicBoxName);
+  int index;
+  String summary = '';
+  String memo = '';
+  String tags_string = '';
   int created_at;
   int updated_at;
 
+  _TopicPageState(index) {
+    this.index = index;
+    if (index != null) {
+      var topic = box.getAt(index);
+      summary = topic?.summary;
+      memo = topic?.memo;
+      tags_string = topic?.tags_string;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final summaryEditingController =
+        TextEditingController.fromValue(TextEditingValue(
+      text: summary,
+      selection: TextSelection.collapsed(offset: summary.length),
+    ));
+    final memoEditingController =
+        TextEditingController.fromValue(TextEditingValue(
+      text: memo,
+      selection: TextSelection.collapsed(offset: memo.length),
+    ));
+    final tagsStringEditingController =
+        TextEditingController.fromValue(TextEditingValue(
+      text: tags_string,
+      selection: TextSelection.collapsed(offset: tags_string.length),
+    ));
+
     return Scaffold(
       appBar: AppBar(
         title: Text('話題の新規作成 | 会話ネタ帳'),
@@ -27,6 +58,7 @@ class _TopicPageState extends State<TopicPage> {
           padding: const EdgeInsets.all(16),
           child: ListView(children: [
             TextField(
+              controller: summaryEditingController,
               decoration: const InputDecoration(
                   labelText: 'いいたいこと', hintText: 'この話題で言いたいことを短くまとめましょう。'),
               onChanged: (value) {
@@ -36,6 +68,7 @@ class _TopicPageState extends State<TopicPage> {
               },
             ),
             TextField(
+              controller: memoEditingController,
               decoration: const InputDecoration(
                   labelText: 'メモ',
                   hintText:
@@ -48,6 +81,7 @@ class _TopicPageState extends State<TopicPage> {
               },
             ),
             TextField(
+              controller: tagsStringEditingController,
               decoration: const InputDecoration(
                   labelText: 'タグ', hintText: 'スペースで区切って入力してください。'),
               onChanged: (value) {
@@ -66,7 +100,15 @@ class _TopicPageState extends State<TopicPage> {
 
   void onFormSubmit() {
     Box<Topic> topicBox = Hive.box<Topic>(topicBoxName);
-    topicBox.add(Topic(summary, memo, tags_string, created_at, updated_at));
+    if (index == null) {
+      topicBox.add(Topic(summary, memo, tags_string, created_at, updated_at));
+    } else {
+      var topic = box.getAt(index);
+      topic.summary = summary;
+      topic.memo = memo;
+      topic.tags_string = tags_string;
+      topicBox.putAt(index, topic);
+    }
     Navigator.of(context).pop();
   }
 }

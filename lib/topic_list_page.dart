@@ -27,6 +27,9 @@ class TopicListPage extends StatelessWidget {
                   return Card(
                     clipBehavior: Clip.antiAlias,
                     child: InkWell(
+                      onTap: () {
+                        _editTopic(context, index);
+                      },
                       onLongPress: () {
                         showDialog(
                             context: context,
@@ -80,6 +83,14 @@ class TopicListPage extends StatelessWidget {
         context,
         MaterialPageRoute(
           builder: (context) => TopicPage(),
+        ));
+  }
+
+  void _editTopic(BuildContext context, int index) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => TopicPage(index: index),
         ));
   }
 }
