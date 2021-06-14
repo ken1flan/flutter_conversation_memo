@@ -34,6 +34,8 @@ class _TopicPageState extends State<TopicPage> {
 
   @override
   Widget build(BuildContext context) {
+    final titleString = index == null ? '話題の新規作成 | 会話ネタ帳' : '話題の編集 | 会話ネタ帳';
+    final indexString = index.toString();
     final summaryEditingController =
         TextEditingController.fromValue(TextEditingValue(
       text: summary,
@@ -52,12 +54,14 @@ class _TopicPageState extends State<TopicPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('話題の新規作成 | 会話ネタ帳'),
+        title: Text(titleString),
       ),
       body: Padding(
           padding: const EdgeInsets.all(16),
           child: ListView(children: [
+            Text('summaryTextField$indexString'),
             TextField(
+              key: ValueKey('summaryTextField$indexString'),
               controller: summaryEditingController,
               decoration: const InputDecoration(
                   labelText: 'いいたいこと', hintText: 'この話題で言いたいことを短くまとめましょう。'),
@@ -68,6 +72,7 @@ class _TopicPageState extends State<TopicPage> {
               },
             ),
             TextField(
+              key: ValueKey('memoTextField$indexString'),
               controller: memoEditingController,
               decoration: const InputDecoration(
                   labelText: 'メモ',
@@ -81,6 +86,7 @@ class _TopicPageState extends State<TopicPage> {
               },
             ),
             TextField(
+              key: ValueKey('tagsStringTextField$indexString'),
               controller: tagsStringEditingController,
               decoration: const InputDecoration(
                   labelText: 'タグ', hintText: 'スペースで区切って入力してください。'),
@@ -93,6 +99,7 @@ class _TopicPageState extends State<TopicPage> {
             Padding(
               padding: const EdgeInsets.only(top: 32),
               child: ElevatedButton(
+                key: Key('saveButton'),
                 onPressed: onFormSubmit,
                 child: Text('保存'),
               ),
@@ -102,7 +109,7 @@ class _TopicPageState extends State<TopicPage> {
   }
 
   void onFormSubmit() {
-    Box<Topic> topicBox = Hive.box<Topic>(topicBoxName);
+    var topicBox = Hive.box<Topic>(topicBoxName);
     if (index == null) {
       topicBox.add(Topic(summary, memo, tags_string, created_at, updated_at));
     } else {
