@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:flutter_conversation_memo/topic_page.dart';
 import 'package:flutter_conversation_memo/topic.dart';

@@ -23,7 +23,7 @@ class TopicListPage extends StatelessWidget {
               return ListView.builder(
                 itemCount: box.values.length,
                 itemBuilder: (context, index) {
-                  Topic currentTopic = box.getAt(index);
+                  var currentTopic = box.getAt(index);
                   return Card(
                     clipBehavior: Clip.antiAlias,
                     child: InkWell(
