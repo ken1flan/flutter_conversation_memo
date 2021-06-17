@@ -8,42 +8,39 @@ import '../widget_test_helper.dart';
 
 void main() async {
   await initializeTest();
-  testWidgets('Topicが0個のとき、ひとつもないことが表示されていること', (WidgetTester tester) async {
+
+  setUp(() async {
     await initializeExample();
-    await tester.pumpWidget(wrapWithMaterial(TopicListPage()));
+  });
 
-    expect(find.text('まだありません。'), findsOneWidget);
-
+  tearDown(() async {
     await finalizeExample();
   });
 
-  testWidgets('Topicが1個のとき、表示されていること', (WidgetTester tester) async {
-    await initializeExample();
+  testWidgets('Topicが0個のとき、ひとつもないことが表示されていること', (WidgetTester tester) async {
+    await tester.pumpWidget(wrapWithMaterial(TopicListPage()));
 
+    expect(find.text('まだありません。'), findsOneWidget);
+  });
+
+  testWidgets('Topicが1個のとき、表示されていること', (WidgetTester tester) async {
     var box = Hive.box<Topic>(topicBoxName);
     await box.add(Topic('Summary', 'Memo', '', 1, 1));
 
     await tester.pumpWidget(wrapWithMaterial(TopicListPage()));
 
     expect(find.text('Summary'), findsOneWidget);
-
-    await finalizeExample();
   });
 
   testWidgets('新規作成ボタンを押したとき、新規追加ページが開くこと', (WidgetTester tester) async {
-    await initializeExample();
     await tester.pumpWidget(wrapWithMaterial(TopicListPage()));
     await tester.tap(find.byIcon(Icons.add));
     await tester.pump();
 
     expect(find.text('話題の新規作成 | 会話ネタ帳', skipOffstage: false), findsOneWidget);
-
-    await finalizeExample();
   });
 
   testWidgets('Topicをタップしたとき、編集後、変更が反映されていること', (WidgetTester tester) async {
-    await initializeExample();
-
     var box = Hive.box<Topic>(topicBoxName);
     await box.add(Topic('Summary', 'Memo', '', 1, 1));
     final index = 0;
@@ -60,14 +57,10 @@ void main() async {
     await tester.pumpAndSettle();
 
     expect(find.text('サマリー'), findsOneWidget);
-
-    await finalizeExample();
   });
 
   testWidgets('Topicを長くタップしたとき、削除ダイアログが表示され、Yesを押したら消えること',
       (WidgetTester tester) async {
-    await initializeExample();
-
     var box = Hive.box<Topic>(topicBoxName);
     await box.add(Topic('Summary', 'Memo', '', 1, 1));
 
@@ -79,14 +72,10 @@ void main() async {
     await tester.pump();
 
     expect(find.text('まだありません。'), findsOneWidget);
-
-    await finalizeExample();
   });
 
   testWidgets('Topicを長くタップしたとき、削除ダイアログが表示され、Noを押したら消えること',
       (WidgetTester tester) async {
-    await initializeExample();
-
     var box = Hive.box<Topic>(topicBoxName);
     await box.add(Topic('Summary', 'Memo', '', 1, 1));
 
@@ -98,7 +87,5 @@ void main() async {
     await tester.pump();
 
     expect(find.text('Summary'), findsOneWidget);
-
-    await finalizeExample();
   });
 }
