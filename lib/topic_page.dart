@@ -19,8 +19,8 @@ class _TopicPageState extends State<TopicPage> {
   String summary = '';
   String memo = '';
   String tags_string = '';
-  int created_at;
-  int updated_at;
+  DateTime created_at;
+  DateTime updated_at;
 
   _TopicPageState(index) {
     this.index = index;
@@ -111,12 +111,14 @@ class _TopicPageState extends State<TopicPage> {
   void onFormSubmit() {
     var topicBox = Hive.box<Topic>(topicBoxName);
     if (index == null) {
-      topicBox.add(Topic(summary, memo, tags_string, created_at, updated_at));
+      topicBox.add(Topic(summary, memo, tags_string, DateTime.now().toUtc(),
+          DateTime.now().toUtc()));
     } else {
       var topic = box.getAt(index);
       topic.summary = summary;
       topic.memo = memo;
       topic.tags_string = tags_string;
+      topic.updated_at = DateTime.now().toUtc();
       topicBox.putAt(index, topic);
     }
     Navigator.of(context).pop();

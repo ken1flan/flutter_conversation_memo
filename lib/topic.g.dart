@@ -20,8 +20,8 @@ class TopicAdapter extends TypeAdapter<Topic> {
       fields[0] as String,
       fields[1] as String,
       fields[2] as String,
-      fields[3] as int,
-      fields[4] as int,
+      fields[3] as DateTime,
+      fields[4] as DateTime,
     );
   }
 
