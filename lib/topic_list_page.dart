@@ -17,6 +17,22 @@ class TopicListPage extends StatelessWidget {
         appBar: AppBar(
           title: Text(localizations.appTitle),
         ),
+        drawer: Drawer(
+          child: ListView(
+            children: <Widget>[
+              DrawerHeader(
+                decoration: BoxDecoration(color: theme.primaryColor),
+                child: Text(
+                  'メニュー',
+                  style: TextStyle(fontSize: 24, color: Colors.white),
+                ),
+              ),
+              ListTile(
+                title: Text('話題'),
+              )
+            ],
+          ),
+        ),
         body: ValueListenableBuilder(
             valueListenable: Hive.box<Topic>(topicBoxName).listenable(),
             builder: (context, Box<Topic> box, _) {
