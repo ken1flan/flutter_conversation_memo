@@ -4,6 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_conversation_memo/topic_list_page.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hive/hive.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 import 'package:flutter_conversation_memo/topic.dart';
 
@@ -13,6 +14,7 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(TopicAdapter());
   await Hive.openBox<Topic>(topicBoxName);
+  timeago.setLocaleMessages('ja', timeago.JaMessages());
   runApp(MyApp());
 }
 

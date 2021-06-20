@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_conversation_memo/main.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:timeago/timeago.dart' as timeago;
 import 'package:flutter_conversation_memo/topic_page.dart';
 import 'package:flutter_conversation_memo/topic.dart';
 
@@ -72,13 +73,15 @@ class TopicListPage extends StatelessWidget {
                               Row(
                                 children: [
                                   Text(
-                                      currentTopic.updated_at
-                                          .toLocal()
-                                          .toString(),
+                                      timeago.format(currentTopic.updated_at,
+                                          locale: 'ja'),
                                       style: TextStyle(
                                         color: theme.disabledColor,
                                         fontSize: 12,
                                       )),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
                                   Text(currentTopic.tags_string,
                                       style: TextStyle(
                                           color: theme.disabledColor,
