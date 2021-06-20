@@ -6,6 +6,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:flutter_conversation_memo/topic_page.dart';
 import 'package:flutter_conversation_memo/topic.dart';
+import 'package:flutter_conversation_memo/drawer.dart';
 
 class TopicListPage extends StatelessWidget {
   @override
@@ -17,22 +18,7 @@ class TopicListPage extends StatelessWidget {
         appBar: AppBar(
           title: Text(localizations.appTitle),
         ),
-        drawer: Drawer(
-          child: ListView(
-            children: <Widget>[
-              DrawerHeader(
-                decoration: BoxDecoration(color: theme.primaryColor),
-                child: Text(
-                  'メニュー',
-                  style: TextStyle(fontSize: 24, color: Colors.white),
-                ),
-              ),
-              ListTile(
-                title: Text('話題'),
-              )
-            ],
-          ),
-        ),
+        drawer: createDrawer(context),
         body: ValueListenableBuilder(
             valueListenable: Hive.box<Topic>(topicBoxName).listenable(),
             builder: (context, Box<Topic> box, _) {
