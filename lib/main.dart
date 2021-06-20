@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_conversation_memo/topic_list_page.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hive/hive.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 import 'package:flutter_conversation_memo/topic.dart';
 
@@ -11,6 +14,7 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(TopicAdapter());
   await Hive.openBox<Topic>(topicBoxName);
+  timeago.setLocaleMessages('ja', timeago.JaMessages());
   runApp(MyApp());
 }
 
@@ -19,7 +23,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Conversation memo',
+      localizationsDelegates: [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale('ja', ''),
+      ],
       theme: ThemeData(
         // This is the theme of your application.
         //

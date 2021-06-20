@@ -25,7 +25,7 @@ void main() async {
 
   testWidgets('Topicが指定されているとき、編集ページが表示されていること', (WidgetTester tester) async {
     var box = Hive.box<Topic>(topicBoxName);
-    await box.add(Topic('Summary', 'Memo', '', 1, 1));
+    await box.add(Topic('Summary', 'Memo', '', DateTime.now(), DateTime.now()));
     var index = 0;
 
     await tester.pumpWidget(wrapWithMaterial(TopicPage(index: index)));

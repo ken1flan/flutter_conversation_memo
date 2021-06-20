@@ -11,9 +11,9 @@ class Topic {
   @HiveField(2)
   String tags_string;
   @HiveField(3)
-  int created_at;
+  DateTime created_at;
   @HiveField(4)
-  int updated_at;
+  DateTime updated_at;
 
   Topic(this.summary, this.memo, this.tags_string, this.created_at,
       this.updated_at);

@@ -25,7 +25,7 @@ void main() async {
 
   testWidgets('Topicが1個のとき、表示されていること', (WidgetTester tester) async {
     var box = Hive.box<Topic>(topicBoxName);
-    await box.add(Topic('Summary', 'Memo', '', 1, 1));
+    await box.add(Topic('Summary', 'Memo', '', DateTime.now(), DateTime.now()));
 
     await tester.pumpWidget(wrapWithMaterial(TopicListPage()));
 
@@ -42,7 +42,7 @@ void main() async {
 
   testWidgets('Topicをタップしたとき、編集後、変更が反映されていること', (WidgetTester tester) async {
     var box = Hive.box<Topic>(topicBoxName);
-    await box.add(Topic('Summary', 'Memo', '', 1, 1));
+    await box.add(Topic('Summary', 'Memo', '', DateTime.now(), DateTime.now()));
     final index = 0;
 
     await tester.pumpWidget(wrapWithMaterial(TopicListPage()));
@@ -62,7 +62,7 @@ void main() async {
   testWidgets('Topicを長くタップしたとき、削除ダイアログが表示され、Yesを押したら消えること',
       (WidgetTester tester) async {
     var box = Hive.box<Topic>(topicBoxName);
-    await box.add(Topic('Summary', 'Memo', '', 1, 1));
+    await box.add(Topic('Summary', 'Memo', '', DateTime.now(), DateTime.now()));
 
     await tester.pumpWidget(wrapWithMaterial(TopicListPage()));
     await tester.longPress(find.text('Summary'));
@@ -77,7 +77,7 @@ void main() async {
   testWidgets('Topicを長くタップしたとき、削除ダイアログが表示され、Noを押したら消えること',
       (WidgetTester tester) async {
     var box = Hive.box<Topic>(topicBoxName);
-    await box.add(Topic('Summary', 'Memo', '', 1, 1));
+    await box.add(Topic('Summary', 'Memo', '', DateTime.now(), DateTime.now()));
 
     await tester.pumpWidget(wrapWithMaterial(TopicListPage()));
     await tester.longPress(find.text('Summary'));

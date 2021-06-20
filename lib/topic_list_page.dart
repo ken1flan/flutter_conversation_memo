@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_conversation_memo/main.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:timeago/timeago.dart' as timeago;
 import 'package:flutter_conversation_memo/topic_page.dart';
 import 'package:flutter_conversation_memo/topic.dart';
 
 class TopicListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+    var localizations = AppLocalizations.of(context);
+
     return Scaffold(
         appBar: AppBar(
-          title: Text('会話ネタ帳'),
+          title: Text(localizations.appTitle),
         ),
         body: ValueListenableBuilder(
             valueListenable: Hive.box<Topic>(topicBoxName).listenable(),
@@ -61,7 +66,29 @@ class TopicListPage extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               SizedBox(height: 5),
-                              Text(currentTopic.summary),
+                              Text(
+                                currentTopic.summary,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                      timeago.format(currentTopic.updated_at,
+                                          locale: 'ja'),
+                                      style: TextStyle(
+                                        color: theme.disabledColor,
+                                        fontSize: 12,
+                                      )),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(currentTopic.tags_string,
+                                      style: TextStyle(
+                                          color: theme.disabledColor,
+                                          fontSize: 12)),
+                                ],
+                              ),
+                              SizedBox(height: 5),
                             ]),
                       ),
                     ),
