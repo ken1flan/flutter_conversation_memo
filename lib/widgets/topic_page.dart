@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_conversation_memo/main.dart';
 import 'package:hive/hive.dart';
-import 'package:flutter_conversation_memo/topic.dart';
+import 'package:flutter_conversation_memo/models/topic.dart';
 
 class TopicPage extends StatefulWidget {
   final formKey = GlobalKey<FormState>();

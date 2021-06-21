@@ -6,7 +6,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hive/hive.dart';
 
-import 'package:flutter_conversation_memo/topic.dart';
+import 'package:flutter_conversation_memo/models/topic.dart';
 
 const String topicBoxName = 'topicBox';
 

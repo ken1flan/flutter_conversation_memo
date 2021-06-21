@@ -4,9 +4,9 @@ import 'package:flutter_conversation_memo/main.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:timeago/timeago.dart' as timeago;
-import 'package:flutter_conversation_memo/topic_page.dart';
-import 'package:flutter_conversation_memo/topic.dart';
-import 'package:flutter_conversation_memo/drawer.dart';
+import 'package:flutter_conversation_memo/widgets/topic_page.dart';
+import 'package:flutter_conversation_memo/models/topic.dart';
+import 'package:flutter_conversation_memo/widgets/drawer.dart';
 
 class TopicListPage extends StatelessWidget {
   @override
