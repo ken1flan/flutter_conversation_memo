@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_conversation_memo/topic_list_page.dart';
+import 'package:flutter_conversation_memo/widgets/topic_list_page.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hive/hive.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-import 'package:flutter_conversation_memo/topic.dart';
+import 'package:flutter_conversation_memo/models/topic.dart';
 
 const String topicBoxName = 'topicBox';
 

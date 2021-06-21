@@ -2,8 +2,8 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:flutter_conversation_memo/topic_list_page.dart';
-import 'package:flutter_conversation_memo/topic.dart';
+import 'package:flutter_conversation_memo/widgets/topic_list_page.dart';
+import 'package:flutter_conversation_memo/models/topic.dart';
 import '../widget_test_helper.dart';
 
 void main() async {
