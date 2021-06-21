@@ -11,15 +11,15 @@ Drawer createDrawer(context) {
         DrawerHeader(
           decoration: BoxDecoration(color: theme.primaryColor),
           child: Text(
-            'メニュー',
+            localizations.appTitle,
             style: TextStyle(fontSize: 24, color: Colors.white),
           ),
         ),
         ListTile(
-          title: Text('話題'),
+          title: Text(localizations.topic),
         ),
         ListTile(
-          title: Text('相手'),
+          title: Text(localizations.person),
         ),
       ],
     ),
