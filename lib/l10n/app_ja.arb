@@ -2,5 +2,6 @@
   "appTitle": "会話ネタ帳",
   "topic": "話題",
   "person": "人",
-  "notFound": "まだありません。"
+  "notFound": "まだありません。",
+  "personListAdd": "人を追加"
 }

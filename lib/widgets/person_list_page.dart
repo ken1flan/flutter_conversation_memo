@@ -16,6 +16,13 @@ class PersonListPage extends StatelessWidget {
       body: Center(
         child: Text(localizations.notFound),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // TOOD
+        },
+        tooltip: localizations.personListAdd,
+        child: Icon(Icons.add),
+      ),
     );
   }
 }
