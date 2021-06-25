@@ -12,8 +12,28 @@ class _PersonPageState extends State<PersonPage> {
         appBar: AppBar(
           title: Text('人'),
         ),
-        body: Center(
-          child: Text('TODO'),
-        ));
+        body: Padding(
+            padding: const EdgeInsets.all(16),
+            child: ListView(
+              children: [
+                TextField(
+                  decoration: const InputDecoration(
+                    labelText: '名前',
+                  ),
+                ),
+                TextField(
+                  decoration: const InputDecoration(
+                    labelText: 'メモ',
+                  ),
+                  maxLines: 10,
+                ),
+                TextField(
+                  decoration: const InputDecoration(
+                    labelText: 'タグ',
+                    hintText: 'スペースで区切って入力してください。',
+                  ),
+                ),
+              ],
+            )));
   }
 }
