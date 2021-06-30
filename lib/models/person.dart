@@ -2,7 +2,9 @@ import 'package:hive/hive.dart';
 
 part 'person.g.dart';
 
-@HiveType(typeId: 1)
+const int PersonTypeId = 1;
+
+@HiveType(typeId: PersonTypeId)
 class Person {
   int index;
   @HiveField(0)
@@ -20,23 +22,24 @@ class Person {
       this.name, this.memo, this.tags_string, this.created_at, this.updated_at);
 
   static const boxName = 'personBox';
-  static bool initialized = false;
 
   static void initialize() async {
-    Hive.registerAdapter(PersonAdapter());
-    await Hive.openBox<Person>('personBox');
-    initialized = true;
+    if (!Hive.isAdapterRegistered(PersonTypeId)) {
+      Hive.registerAdapter(PersonAdapter());
+    }
+
+    if (!Hive.isBoxOpen(boxName)) {
+      await Hive.openBox<Person>(boxName);
+    }
   }
 
   static Box<Person> box() {
-    if (!initialized) {
-      initialize();
-    }
+    initialize();
 
     return Hive.box<Person>(boxName);
   }
 
-  static Person getAt(index) {
+  static Person getAt(int index) {
     var person = box().getAt(index);
     person.index = index;
     return person;
