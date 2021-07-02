@@ -3,8 +3,8 @@ import 'package:flutter_test/flutter_test.dart';
 import '../supports/hive.dart';
 import 'package:flutter_conversation_memo/models/person.dart';
 
-void main() {
-  initializeHive();
+void main() async {
+  await initializeHive();
   Person.initialize();
 
   tearDownAll(() {
