@@ -7,6 +7,6 @@ Future<void> initializeHive() async {
   Hive.init(path);
 }
 
-Future<void> tearDownHive() async {
+Future<void> finalizeHive() async {
   await Hive.deleteFromDisk();
 }

@@ -15,7 +15,7 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(TopicAdapter());
   await Hive.openBox<Topic>(topicBoxName);
-  Person.initialize();
+  await Person.initialize();
   timeago.setLocaleMessages('ja', timeago.JaMessages());
   runApp(MyApp());
 }
