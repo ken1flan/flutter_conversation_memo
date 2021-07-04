@@ -6,7 +6,9 @@ const int PersonTypeId = 1;
 
 @HiveType(typeId: PersonTypeId)
 class Person {
+  static Box<Person> _box;
   int index;
+
   @HiveField(0)
   String name;
   @HiveField(1)
@@ -23,20 +25,13 @@ class Person {
 
   static const boxName = 'personBox';
 
-  static void initialize() async {
-    if (!Hive.isAdapterRegistered(PersonTypeId)) {
-      Hive.registerAdapter(PersonAdapter());
-    }
-
-    if (!Hive.isBoxOpen(boxName)) {
-      await Hive.openBox<Person>(boxName);
-    }
+  static Future<void> initialize() async {
+    Hive.registerAdapter(PersonAdapter());
+    _box = await Hive.openBox<Person>(boxName);
   }
 
   static Box<Person> box() {
-    initialize();
-
-    return Hive.box<Person>(boxName);
+    return _box;
   }
 
   static Person getAt(int index) {
