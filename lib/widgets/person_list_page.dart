@@ -38,7 +38,28 @@ class PersonListPage extends StatelessWidget {
                       _editPerson(context, index);
                     },
                     onLongPress: () {
-                      // tood
+                      showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (context) {
+                            return AlertDialog(
+                              content:
+                                  Text('${currentPerson.name}を消しますが、よろしいですか？'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () => Navigator.of(context).pop(),
+                                  child: Text('No'),
+                                ),
+                                TextButton(
+                                  onPressed: () async {
+                                    await Person.deleteAt(index);
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('Yes'),
+                                )
+                              ],
+                            );
+                          });
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),

@@ -40,6 +40,10 @@ class Person {
     return person;
   }
 
+  static Future<void> deleteAt(int index) async {
+    return box().deleteAt(index);
+  }
+
   void save() {
     var box = Person.box();
     updated_at = DateTime.now().toUtc();
