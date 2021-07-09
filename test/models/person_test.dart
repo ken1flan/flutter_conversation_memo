@@ -4,7 +4,7 @@ import '../supports/hive.dart';
 import 'package:flutter_conversation_memo/models/person.dart';
 
 void main() async {
-  await initializeHive();
+  initializeHive();
   await Person.initialize();
 
   tearDown(() async {
@@ -12,7 +12,7 @@ void main() async {
   });
 
   tearDownAll(() async {
-    await finalizeHive();
+    finalizeHive();
   });
 
   group('.getAt(index)', () {
