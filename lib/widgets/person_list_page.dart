@@ -11,7 +11,6 @@ import 'package:flutter_conversation_memo/models/person.dart';
 class PersonListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context);
     var localizations = AppLocalizations.of(context);
 
     return Scaffold(
