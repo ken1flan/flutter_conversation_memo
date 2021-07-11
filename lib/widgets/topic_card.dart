@@ -3,9 +3,8 @@ import 'package:timeago/timeago.dart' as timeago;
 import 'package:flutter_conversation_memo/widgets/topic_page.dart';
 import 'package:flutter_conversation_memo/models/topic.dart';
 
-class TopicSummary extends Card {
-  //
-  TopicSummary(BuildContext context, int index, Topic topic)
+class TopicCard extends Card {
+  TopicCard(BuildContext context, int index, Topic topic)
       : super(
           clipBehavior: Clip.antiAlias,
           child: InkWell(
