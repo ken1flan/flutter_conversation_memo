@@ -2,16 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:timeago/timeago.dart' as timeago;
 
 import 'package:flutter_conversation_memo/widgets/drawer.dart';
 import 'package:flutter_conversation_memo/widgets/person_page.dart';
+import 'package:flutter_conversation_memo/widgets/person_card.dart';
 import 'package:flutter_conversation_memo/models/person.dart';
 
 class PersonListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context);
     var localizations = AppLocalizations.of(context);
 
     return Scaffold(
@@ -31,71 +30,7 @@ class PersonListPage extends StatelessWidget {
               itemCount: box.values.length,
               itemBuilder: (context, index) {
                 var currentPerson = box.getAt(index);
-                return Card(
-                  clipBehavior: Clip.antiAlias,
-                  child: InkWell(
-                    onTap: () {
-                      _editPerson(context, index);
-                    },
-                    onLongPress: () {
-                      showDialog(
-                          context: context,
-                          barrierDismissible: false,
-                          builder: (context) {
-                            return AlertDialog(
-                              content:
-                                  Text('${currentPerson.name}を消しますが、よろしいですか？'),
-                              actions: <Widget>[
-                                TextButton(
-                                  onPressed: () => Navigator.of(context).pop(),
-                                  child: Text('No'),
-                                ),
-                                TextButton(
-                                  onPressed: () async {
-                                    await Person.deleteAt(index);
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: Text('Yes'),
-                                )
-                              ],
-                            );
-                          });
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          SizedBox(height: 5),
-                          Text(
-                            currentPerson.name,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                  timeago.format(currentPerson.updated_at,
-                                      locale: 'ja'),
-                                  style: TextStyle(
-                                    color: theme.disabledColor,
-                                    fontSize: 12,
-                                  )),
-                              SizedBox(width: 5),
-                              Text(
-                                currentPerson.tags_string,
-                                style: TextStyle(
-                                  color: theme.disabledColor,
-                                  fontSize: 12,
-                                ),
-                              )
-                            ],
-                          ),
-                          SizedBox(height: 5),
-                        ],
-                      ),
-                    ),
-                  ),
-                );
+                return PersonCard(context, index, currentPerson);
               });
         },
       ),
@@ -114,14 +49,6 @@ class PersonListPage extends StatelessWidget {
         context,
         MaterialPageRoute(
           builder: (context) => PersonPage(),
-        ));
-  }
-
-  void _editPerson(BuildContext context, int index) {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => PersonPage(index: index),
         ));
   }
 }

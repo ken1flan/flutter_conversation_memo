@@ -5,14 +5,10 @@ import 'package:flutter_conversation_memo/models/person.dart';
 
 void main() async {
   initializeHive();
-  await Person.initialize();
+  await Person.initialize(memory_box: true);
 
   tearDown(() async {
     await Person.box().clear();
-  });
-
-  tearDownAll(() async {
-    finalizeHive();
   });
 
   group('.getAt(index)', () {

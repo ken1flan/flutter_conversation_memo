@@ -3,7 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_conversation_memo/main.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:flutter_conversation_memo/widgets/topic_summary.dart';
+import 'package:flutter_conversation_memo/widgets/topic_card.dart';
 import 'package:flutter_conversation_memo/widgets/topic_page.dart';
 import 'package:flutter_conversation_memo/models/topic.dart';
 import 'package:flutter_conversation_memo/widgets/drawer.dart';
@@ -30,7 +30,7 @@ class TopicListPage extends StatelessWidget {
                 itemCount: box.values.length,
                 itemBuilder: (context, index) {
                   var currentTopic = box.getAt(index);
-                  return TopicSummary(context, index, currentTopic);
+                  return TopicCard(context, index, currentTopic);
                 },
               );
             }),
