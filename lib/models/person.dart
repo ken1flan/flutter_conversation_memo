@@ -1,3 +1,4 @@
+import 'dart:typed_data';
 import 'package:hive/hive.dart';
 
 part 'person.g.dart';
@@ -25,9 +26,10 @@ class Person {
 
   static const boxName = 'personBox';
 
-  static Future<void> initialize() async {
+  static Future<void> initialize({memory_box = false}) async {
     Hive.registerAdapter(PersonAdapter());
-    _box = await Hive.openBox<Person>(boxName);
+    var bytes = memory_box ? Uint8List(0) : null;
+    _box = await Hive.openBox<Person>(boxName, bytes: bytes);
   }
 
   static Box<Person> box() {
