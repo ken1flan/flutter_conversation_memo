@@ -13,8 +13,7 @@ const String topicBoxName = 'topicBox';
 
 void main() async {
   await Hive.initFlutter();
-  Hive.registerAdapter(TopicAdapter());
-  await Hive.openBox<Topic>(topicBoxName);
+  await Topic.initialize();
   await Person.initialize();
   timeago.setLocaleMessages('ja', timeago.JaMessages());
   runApp(MyApp());
