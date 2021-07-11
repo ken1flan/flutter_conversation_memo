@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter_conversation_memo/models/person.dart';
+import 'package:flutter_conversation_memo/models/topic.dart';
+import 'package:flutter_conversation_memo/widgets/topic_card.dart';
 
 class PersonPage extends StatefulWidget {
   final formKey = GlobalKey<FormState>();
@@ -47,6 +51,7 @@ class _PersonPageState extends State<PersonPage> {
       text: tags_string,
       selection: TextSelection.collapsed(offset: tags_string.length),
     ));
+    final interestedTopics = Topic.box().toMap();
 
     return Scaffold(
         appBar: AppBar(
@@ -92,12 +97,24 @@ class _PersonPageState extends State<PersonPage> {
                   },
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 32),
+                  padding: const EdgeInsets.only(top: 32, bottom: 32),
                   child: ElevatedButton(
                     key: Key('saveButton'),
                     onPressed: onFormSubmit,
                     child: Text('保存'),
                   ),
+                ),
+                Text('興味のありそうな話題'),
+                ValueListenableBuilder(
+                  valueListenable: Topic.box().listenable(),
+                  builder: (context, Box<Topic> box, _) {
+                    //if (box.values.isEmpty) {
+                    return Center(
+                      child: Text('まだありません。'),
+                    );
+                    //}
+                    //
+                  },
                 ),
               ],
             )));
