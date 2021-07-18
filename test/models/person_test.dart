@@ -75,4 +75,50 @@ void main() async {
       });
     });
   });
+
+  group('#tags', () {
+    group('tags_string = nullのとき', () {
+      test('空のリストを返すこと', () {
+        var person = Person('yamada', 'memo\nmemo', null, null, null);
+
+        expect(person.tags(), isEmpty);
+      });
+    });
+
+    group('tags_string = ""のとき', () {
+      test('空のリストを返すこと', () {
+        var person = Person('yamada', 'memo\nmemo', '', null, null);
+
+        print(person.tags());
+        expect(person.tags(), isEmpty);
+      });
+    });
+
+    group('tags_string = "tag1"のとき', () {
+      test('["tag1"]を返すこと', () {
+        var person = Person('yamada', 'memo\nmemo', 'tag1', null, null);
+
+        print(person.tags());
+        expect(person.tags(), equals(['tag1']));
+      });
+    });
+
+    group('tags_string = "tag1 tag2"のとき', () {
+      test('["tag1", "tag2]を返すこと', () {
+        var person = Person('yamada', 'memo\nmemo', 'tag1 tag2', null, null);
+
+        print(person.tags());
+        expect(person.tags(), equals(['tag1', 'tag2']));
+      });
+    });
+
+    group('tags_string = " tag1  tag2 "のとき', () {
+      test('["tag1", "tag2]を返すこと', () {
+        var person = Person('yamada', 'memo\nmemo', ' tag1  tag2 ', null, null);
+
+        print(person.tags());
+        expect(person.tags(), equals(['tag1', 'tag2']));
+      });
+    });
+  });
 }

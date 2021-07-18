@@ -7,6 +7,8 @@ const int PersonTypeId = 1;
 
 @HiveType(typeId: PersonTypeId)
 class Person {
+  String TAG_SEPARATOR = ' ';
+
   static Box<Person> _box;
   int index;
 
@@ -56,5 +58,19 @@ class Person {
     } else {
       box.putAt(index, this);
     }
+  }
+
+  List<String> tags() {
+    if (tags_string == null) {
+      return [];
+    }
+    List<String> tags = [];
+    tags_string.split(TAG_SEPARATOR).forEach((element) {
+      if (element != null && element != '') {
+        tags.add(element);
+      }
+    });
+
+    return tags;
   }
 }
