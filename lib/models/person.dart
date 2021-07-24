@@ -48,6 +48,21 @@ class Person {
     return box().deleteAt(index);
   }
 
+  static Map<dynamic, Person> searchByTags(List<String> tags) {
+    var persons = box().toMap();
+
+    persons.removeWhere((index, person) {
+      return !(person.tags().any((person_tag) {
+        // Mapでwhere()が使えないので否定条件でremoveWhere()を使っています。
+        return tags.any((tag) {
+          return tag == person_tag;
+        });
+      }));
+    });
+
+    return persons;
+  }
+
   void save() {
     var box = Person.box();
     updated_at = DateTime.now().toUtc();

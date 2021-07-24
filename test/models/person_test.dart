@@ -76,6 +76,67 @@ void main() async {
     });
   });
 
+  group('.searchByTags', () {
+    group('1件も登録されていないとき', () {
+      test('空のリストを返すこと', () {
+        var tags = ['tag'];
+        expect(Person.searchByTags(tags), isEmpty);
+      });
+    });
+
+    group('3件登録されているとき', () {
+      setUp(() {
+        Person('yamada', 'memo\nmemo', 'tag1 tag2', null, null).save();
+        Person('sato', 'memo\nmemo', 'tag3 tag4', null, null).save();
+        Person('tanaka', 'memo\nmemo', 'tag2 tag9', null, null).save();
+      });
+
+      test('タグに空の配列を指定したとき、空のリストを返すこと', () {
+        var tags = <String>[];
+        // expect(Person.searchByTags(tags), equals(Person.box().toMap()));
+        expect(Person.searchByTags(tags), isEmpty);
+      });
+
+      test('存在しないタグを指定したとき、空のリストを返すこと', () {
+        var tags = <String>['tagx', 'tagy'];
+        expect(Person.searchByTags(tags), isEmpty);
+      });
+
+      test('1件ヒットするタグを指定したとき、1件のリストを返すこと', () {
+        var tags = <String>['tag3', 'tagx'];
+        var names = Person.searchByTags(tags)
+            .values
+            .map((person) => person.name)
+            .toList();
+        expect(names, contains('sato'));
+        expect(names, isNot(contains('yamada')));
+        expect(names, isNot(contains('tanaka')));
+      });
+
+      test('2件ヒットするタグを指定したとき、2件のリストを返すこと', () {
+        var tags = <String>['tagx', 'tag2'];
+        var names = Person.searchByTags(tags)
+            .values
+            .map((person) => person.name)
+            .toList();
+        expect(names, contains('yamada'));
+        expect(names, contains('tanaka'));
+        expect(names, isNot(contains('sato')));
+      });
+
+      test('1件ヒットするタグを2つ指定したとき、2件のリストを返すこと', () {
+        var tags = <String>['tag1', 'tagx', 'tag3'];
+        var names = Person.searchByTags(tags)
+            .values
+            .map((person) => person.name)
+            .toList();
+        expect(names, contains('yamada'));
+        expect(names, contains('sato'));
+        expect(names, isNot(contains('tanaka')));
+      });
+    });
+  });
+
   group('#tags', () {
     group('tags_string = nullのとき', () {
       test('空のリストを返すこと', () {
