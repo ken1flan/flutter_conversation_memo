@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_conversation_memo/models/person.dart';
 import 'package:flutter_conversation_memo/models/topic.dart';
 import 'package:flutter_conversation_memo/widgets/topic_card.dart';
@@ -17,19 +16,23 @@ class PersonPage extends StatefulWidget {
 
 class _PersonPageState extends State<PersonPage> {
   int index;
+  Person person;
   String name = '';
   String memo = '';
   String tags_string = '';
   DateTime created_at;
   DateTime updated_at;
+  Map<dynamic, Topic> interestedTopics;
 
   _PersonPageState(index) {
     this.index = index;
     if (index != null) {
-      var person = Person.getAt(index);
+      person = Person.getAt(index);
       name = person?.name;
       memo = person?.memo;
       tags_string = person?.tags_string;
+
+      interestedTopics = Topic.searchByTags(person.tags());
     }
   }
 
@@ -51,7 +54,7 @@ class _PersonPageState extends State<PersonPage> {
       text: tags_string,
       selection: TextSelection.collapsed(offset: tags_string.length),
     ));
-    final interestedTopics = Topic.box().toMap();
+    var localizations = AppLocalizations.of(context);
 
     return Scaffold(
         appBar: AppBar(
@@ -105,17 +108,19 @@ class _PersonPageState extends State<PersonPage> {
                   ),
                 ),
                 Text('興味のありそうな話題'),
-                ValueListenableBuilder(
-                  valueListenable: Topic.box().listenable(),
-                  builder: (context, Box<Topic> box, _) {
-                    //if (box.values.isEmpty) {
-                    return Center(
-                      child: Text('まだありません。'),
-                    );
-                    //}
-                    //
-                  },
-                ),
+                Builder(builder: (BuildContext context) {
+                  if (interestedTopics == null) {
+                    return Center(child: Text(localizations.notFound));
+                  } else {
+                    return ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: interestedTopics.length,
+                        itemBuilder: (context, index) {
+                          return TopicCard(
+                              context, index, interestedTopics[index]);
+                        });
+                  }
+                }),
               ],
             )));
   }
