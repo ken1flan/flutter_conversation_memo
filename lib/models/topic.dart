@@ -77,7 +77,7 @@ class Topic {
     if (tags_string == null) {
       return [];
     }
-    List<String> tags = [];
+    var tags = <String>[];
     tags_string.split(TAG_SEPARATOR).forEach((element) {
       if (element != null && element != '') {
         tags.add(element);

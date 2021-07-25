@@ -66,7 +66,6 @@ class _TopicPageState extends State<TopicPage> {
       body: Padding(
           padding: const EdgeInsets.all(16),
           child: ListView(children: [
-            Text('summaryTextField$indexString'),
             TextField(
               key: ValueKey('summaryTextField$indexString'),
               controller: summaryEditingController,
