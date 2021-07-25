@@ -7,7 +7,8 @@ const int PersonTypeId = 1;
 
 @HiveType(typeId: PersonTypeId)
 class Person {
-  String TAG_SEPARATOR = ' ';
+  static const boxName = 'personBox';
+  static const String TAG_SEPARATOR = ' ';
 
   static Box<Person> _box;
   int index;
@@ -25,8 +26,6 @@ class Person {
 
   Person(
       this.name, this.memo, this.tags_string, this.created_at, this.updated_at);
-
-  static const boxName = 'personBox';
 
   static Future<void> initialize({memory_box = false}) async {
     Hive.registerAdapter(PersonAdapter());
