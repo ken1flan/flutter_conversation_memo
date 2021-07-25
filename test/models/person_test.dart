@@ -4,11 +4,12 @@ import '../supports/hive.dart';
 import 'package:flutter_conversation_memo/models/person.dart';
 
 void main() async {
-  initializeHive();
-  await Person.initialize(memory_box: true);
+  setUpAll(() {
+    initializeHive();
+  });
 
   tearDown(() async {
-    await Person.box().clear();
+    await tearDownHive();
   });
 
   group('.getAt(index)', () {

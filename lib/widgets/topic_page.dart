@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hive/hive.dart';
 import 'package:flutter_conversation_memo/main.dart';
 import 'package:flutter_conversation_memo/models/topic.dart';
+import 'package:flutter_conversation_memo/models/person.dart';
+import 'package:flutter_conversation_memo/widgets/person_card.dart';
 
 class TopicPage extends StatefulWidget {
   final formKey = GlobalKey<FormState>();
@@ -14,21 +17,24 @@ class TopicPage extends StatefulWidget {
 }
 
 class _TopicPageState extends State<TopicPage> {
-  Box<Topic> box = Hive.box<Topic>(topicBoxName);
   int index;
+  Topic topic;
   String summary = '';
   String memo = '';
   String tags_string = '';
   DateTime created_at;
   DateTime updated_at;
+  Map<dynamic, Person> interestedPersons;
 
   _TopicPageState(index) {
     this.index = index;
     if (index != null) {
-      var topic = box.getAt(index);
+      topic = Topic.getAt(index);
       summary = topic?.summary;
       memo = topic?.memo;
       tags_string = topic?.tags_string;
+
+      interestedPersons = Person.searchByTags(topic.tags());
     }
   }
 
@@ -51,6 +57,7 @@ class _TopicPageState extends State<TopicPage> {
       text: tags_string,
       selection: TextSelection.collapsed(offset: tags_string.length),
     ));
+    var localizations = AppLocalizations.of(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -97,13 +104,27 @@ class _TopicPageState extends State<TopicPage> {
               },
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 32),
+              padding: const EdgeInsets.only(top: 32, bottom: 32),
               child: ElevatedButton(
                 key: Key('saveButton'),
                 onPressed: onFormSubmit,
                 child: Text('保存'),
               ),
             ),
+            Text('興味のありそうな人'),
+            Builder(builder: (BuildContext context) {
+              if (interestedPersons == null) {
+                return Center(child: Text(localizations.notFound));
+              } else {
+                return ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: interestedPersons.length,
+                    itemBuilder: (context, index) {
+                      return PersonCard(
+                          context, index, interestedPersons[index]);
+                    });
+              }
+            }),
           ])),
     );
   }
@@ -114,7 +135,7 @@ class _TopicPageState extends State<TopicPage> {
       topicBox.add(Topic(summary, memo, tags_string, DateTime.now().toUtc(),
           DateTime.now().toUtc()));
     } else {
-      var topic = box.getAt(index);
+      var topic = Topic.getAt(index);
       topic.summary = summary;
       topic.memo = memo;
       topic.tags_string = tags_string;

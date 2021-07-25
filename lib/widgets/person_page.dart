@@ -38,7 +38,7 @@ class _PersonPageState extends State<PersonPage> {
 
   @override
   Widget build(BuildContext context) {
-    final titleString = '人の新規作成 | 会話ネタ帳';
+    final titleString = index == null ? '人の新規作成 | 会話ネタ帳' : '人の編集 | 会話ネタ帳';
     final nameEditingController =
         TextEditingController.fromValue(TextEditingValue(
       text: name,
