@@ -7,6 +7,9 @@ const int PersonTypeId = 1;
 
 @HiveType(typeId: PersonTypeId)
 class Person {
+  static const boxName = 'personBox';
+  static const String TAG_SEPARATOR = ' ';
+
   static Box<Person> _box;
   int index;
 
@@ -23,8 +26,6 @@ class Person {
 
   Person(
       this.name, this.memo, this.tags_string, this.created_at, this.updated_at);
-
-  static const boxName = 'personBox';
 
   static Future<void> initialize({memory_box = false}) async {
     Hive.registerAdapter(PersonAdapter());
@@ -46,6 +47,21 @@ class Person {
     return box().deleteAt(index);
   }
 
+  static Map<dynamic, Person> searchByTags(List<String> tags) {
+    var persons = box().toMap();
+
+    persons.removeWhere((index, person) {
+      return !(person.tags().any((person_tag) {
+        // Mapでwhere()が使えないので否定条件でremoveWhere()を使っています。
+        return tags.any((tag) {
+          return tag == person_tag;
+        });
+      }));
+    });
+
+    return persons;
+  }
+
   void save() {
     var box = Person.box();
     updated_at = DateTime.now().toUtc();
@@ -56,5 +72,19 @@ class Person {
     } else {
       box.putAt(index, this);
     }
+  }
+
+  List<String> tags() {
+    if (tags_string == null) {
+      return [];
+    }
+    var tags = <String>[];
+    tags_string.split(TAG_SEPARATOR).forEach((element) {
+      if (element != null && element != '') {
+        tags.add(element);
+      }
+    });
+
+    return tags;
   }
 }

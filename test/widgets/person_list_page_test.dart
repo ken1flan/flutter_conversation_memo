@@ -1,24 +1,18 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:flutter_conversation_memo/widgets/person_list_page.dart';
 import 'package:flutter_conversation_memo/models/person.dart';
+import '../supports/hive.dart';
 import '../widget_test_helper.dart';
 
 void main() async {
   setUpAll(() async {
-    final path = Directory.current.path;
-    Hive.init(path);
-    await Person.initialize(memory_box: true);
+    await initializeHive();
   });
 
-  tearDown(() {
-    var box = Person.box();
-    if (box.isNotEmpty) {
-      Person.box().clear();
-    }
+  tearDown(() async {
+    await tearDownHive();
   });
 
   group('Personが0個のとき', () {
