@@ -119,8 +119,8 @@ class _TopicPageState extends State<TopicPage> {
                     shrinkWrap: true,
                     itemCount: interestedPersons.length,
                     itemBuilder: (context, index) {
-                      return PersonCard(
-                          context, index, interestedPersons[index]);
+                      var key = interestedPersons.keys.elementAt(index);
+                      return PersonCard(context, key, interestedPersons[key]);
                     });
               }
             }),
