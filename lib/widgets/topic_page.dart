@@ -42,21 +42,6 @@ class _TopicPageState extends State<TopicPage> {
   Widget build(BuildContext context) {
     final titleString = index == null ? '話題の新規作成 | 会話ネタ帳' : '話題の編集 | 会話ネタ帳';
     final indexString = index.toString();
-    final summaryEditingController =
-        TextEditingController.fromValue(TextEditingValue(
-      text: summary,
-      selection: TextSelection.collapsed(offset: summary.length),
-    ));
-    final memoEditingController =
-        TextEditingController.fromValue(TextEditingValue(
-      text: memo,
-      selection: TextSelection.collapsed(offset: memo.length),
-    ));
-    final tagsStringEditingController =
-        TextEditingController.fromValue(TextEditingValue(
-      text: tags_string,
-      selection: TextSelection.collapsed(offset: tags_string.length),
-    ));
     var localizations = AppLocalizations.of(context);
 
     return Scaffold(
@@ -66,9 +51,9 @@ class _TopicPageState extends State<TopicPage> {
       body: Padding(
           padding: const EdgeInsets.all(16),
           child: ListView(children: [
-            TextField(
+            TextFormField(
+              initialValue: summary,
               key: ValueKey('summaryTextField$indexString'),
-              controller: summaryEditingController,
               decoration: const InputDecoration(
                   labelText: 'いいたいこと', hintText: 'この話題で言いたいことを短くまとめましょう。'),
               onChanged: (value) {
@@ -77,9 +62,9 @@ class _TopicPageState extends State<TopicPage> {
                 });
               },
             ),
-            TextField(
+            TextFormField(
+              initialValue: memo,
               key: ValueKey('memoTextField$indexString'),
-              controller: memoEditingController,
               decoration: const InputDecoration(
                   labelText: 'メモ',
                   hintText:
@@ -91,9 +76,9 @@ class _TopicPageState extends State<TopicPage> {
                 });
               },
             ),
-            TextField(
+            TextFormField(
+              initialValue: tags_string,
               key: ValueKey('tagsStringTextField$indexString'),
-              controller: tagsStringEditingController,
               decoration: const InputDecoration(
                   labelText: 'タグ', hintText: 'スペースで区切って入力してください。'),
               onChanged: (value) {

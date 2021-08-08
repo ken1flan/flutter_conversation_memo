@@ -39,21 +39,6 @@ class _PersonPageState extends State<PersonPage> {
   @override
   Widget build(BuildContext context) {
     final titleString = index == null ? '人の新規作成 | 会話ネタ帳' : '人の編集 | 会話ネタ帳';
-    final nameEditingController =
-        TextEditingController.fromValue(TextEditingValue(
-      text: name,
-      selection: TextSelection.collapsed(offset: name.length),
-    ));
-    final memoEditingController =
-        TextEditingController.fromValue(TextEditingValue(
-      text: memo,
-      selection: TextSelection.collapsed(offset: memo.length),
-    ));
-    final tagsStringEditingController =
-        TextEditingController.fromValue(TextEditingValue(
-      text: tags_string,
-      selection: TextSelection.collapsed(offset: tags_string.length),
-    ));
     var localizations = AppLocalizations.of(context);
 
     return Scaffold(
@@ -64,8 +49,8 @@ class _PersonPageState extends State<PersonPage> {
             padding: const EdgeInsets.all(16),
             child: ListView(
               children: [
-                TextField(
-                  controller: nameEditingController,
+                TextFormField(
+                  initialValue: name,
                   decoration: const InputDecoration(
                     labelText: '名前',
                   ),
@@ -75,8 +60,8 @@ class _PersonPageState extends State<PersonPage> {
                     });
                   },
                 ),
-                TextField(
-                  controller: memoEditingController,
+                TextFormField(
+                  initialValue: memo,
                   decoration: const InputDecoration(
                     labelText: 'メモ',
                   ),
@@ -87,8 +72,8 @@ class _PersonPageState extends State<PersonPage> {
                     });
                   },
                 ),
-                TextField(
-                  controller: tagsStringEditingController,
+                TextFormField(
+                  initialValue: tags_string,
                   decoration: const InputDecoration(
                     labelText: 'タグ',
                     hintText: 'スペースで区切って入力してください。',
