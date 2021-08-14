@@ -1,7 +1,47 @@
 {
-  "appTitle": "会話ネタ帳",
-  "topic": "話題",
-  "person": "人",
+  "save": "保存",
   "notFound": "まだありません。",
-  "personListAdd": "人を追加"
+  "appTitle": "Topic Matcher",
+  "topic": "話題",
+  "topicSummary": "いいたいこと",
+  "topicSummaryHint": "この話題で言いたいことを短くまとめましょう。",
+  "topicMemo": "メモ",
+  "topicMemoHint": "話題を話すときにチラ見したいことを書きましょう。\n長くしすぎるとスクロールが入って見づらくなるかもしれません。",
+  "topicTagsString": "タグ",
+  "topicTagsStringHint": "スペースで区切って入力してください。",
+  "topicInterestedPerson": "興味のありそうな人",
+  "topicList": "話題の一覧",
+  "topicPageTitleNew": "話題の新規作成",
+  "topicPageTitleEdit": "話題の編集",
+  "topicListAdd": "話題を追加",
+  "topicDeleteConfirm": "{name}を削除しますか？",
+  "@topicDeleteConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "topicDeleteConfirmYes": "はい、削除します",
+  "topicDeleteConfirmNo": "いいえ",
+  "person": "人",
+  "personName": "名前",
+  "personMemo": "メモ",
+  "personTagsString": "タグ",
+  "personTagsStringHint": "スペースで区切って入力してください。",
+  "personInterestingTopic": "興味のありそうな話題",
+  "personList": "人の一覧",
+  "personPageTitleNew": "人の新規作成",
+  "personPageTitleEdit": "人の編集",
+  "personListAdd": "人を追加",
+  "personDeleteConfirm": "{name}を削除しますか？",
+  "@personDeleteConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "personDeleteConfirmYes": "はい、削除します",
+  "personDeleteConfirmNo": "いいえ"
 }

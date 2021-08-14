@@ -38,8 +38,10 @@ class _PersonPageState extends State<PersonPage> {
 
   @override
   Widget build(BuildContext context) {
-    final titleString = index == null ? '人の新規作成 | 会話ネタ帳' : '人の編集 | 会話ネタ帳';
     var localizations = AppLocalizations.of(context);
+    final titleString = index == null
+        ? localizations.personPageTitleNew
+        : localizations.personPageTitleEdit;
 
     return Scaffold(
         appBar: AppBar(
@@ -51,8 +53,8 @@ class _PersonPageState extends State<PersonPage> {
               children: [
                 TextFormField(
                   initialValue: name,
-                  decoration: const InputDecoration(
-                    labelText: '名前',
+                  decoration: InputDecoration(
+                    labelText: localizations.personName,
                   ),
                   onChanged: (value) {
                     setState(() {
@@ -62,8 +64,8 @@ class _PersonPageState extends State<PersonPage> {
                 ),
                 TextFormField(
                   initialValue: memo,
-                  decoration: const InputDecoration(
-                    labelText: 'メモ',
+                  decoration: InputDecoration(
+                    labelText: localizations.personMemo,
                   ),
                   maxLines: 10,
                   onChanged: (value) {
@@ -74,9 +76,9 @@ class _PersonPageState extends State<PersonPage> {
                 ),
                 TextFormField(
                   initialValue: tags_string,
-                  decoration: const InputDecoration(
-                    labelText: 'タグ',
-                    hintText: 'スペースで区切って入力してください。',
+                  decoration: InputDecoration(
+                    labelText: localizations.personTagsString,
+                    hintText: localizations.personTagsStringHint,
                   ),
                   onChanged: (value) {
                     setState(() {
@@ -89,10 +91,10 @@ class _PersonPageState extends State<PersonPage> {
                   child: ElevatedButton(
                     key: Key('saveButton'),
                     onPressed: onFormSubmit,
-                    child: Text('保存'),
+                    child: Text(localizations.save),
                   ),
                 ),
-                Text('興味のありそうな話題'),
+                Text(localizations.personInterestingTopic),
                 Builder(builder: (BuildContext context) {
                   if (interestedTopics == null) {
                     return Center(child: Text(localizations.notFound));

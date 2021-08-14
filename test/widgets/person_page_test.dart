@@ -19,7 +19,7 @@ void main() async {
         (WidgetTester tester) async {
       await tester.pumpWidget(wrapWithMaterial(PersonPage()));
 
-      expect(find.text('人の新規作成 | 会話ネタ帳', skipOffstage: false), findsOneWidget);
+      expect(find.text('人の新規作成', skipOffstage: false), findsOneWidget);
     });
   });
 
@@ -34,7 +34,7 @@ void main() async {
 
       await tester.pumpWidget(wrapWithMaterial(PersonPage(index: index)));
 
-      expect(find.text('人の編集 | 会話ネタ帳', skipOffstage: false), findsOneWidget);
+      expect(find.text('人の編集', skipOffstage: false), findsOneWidget);
     });
   });
 }

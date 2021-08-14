@@ -15,7 +15,7 @@ class TopicListPage extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
-          title: Text(localizations.appTitle),
+          title: Text(localizations.topicList),
         ),
         drawer: createDrawer(context),
         body: ValueListenableBuilder(
@@ -23,7 +23,7 @@ class TopicListPage extends StatelessWidget {
             builder: (context, Box<Topic> box, _) {
               if (box.values.isEmpty) {
                 return Center(
-                  child: Text('まだありません。'),
+                  child: Text(localizations.notFound),
                 );
               }
               return ListView.builder(
@@ -38,7 +38,7 @@ class TopicListPage extends StatelessWidget {
           onPressed: () {
             _createNewTopic(context);
           },
-          tooltip: 'Add new topic',
+          tooltip: localizations.topicListAdd,
           child: Icon(Icons.add),
         ));
   }

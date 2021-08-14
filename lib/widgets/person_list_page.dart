@@ -15,7 +15,7 @@ class PersonListPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(localizations.appTitle),
+        title: Text(localizations.personList),
       ),
       drawer: createDrawer(context),
       body: ValueListenableBuilder(

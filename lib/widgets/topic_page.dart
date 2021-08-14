@@ -40,9 +40,11 @@ class _TopicPageState extends State<TopicPage> {
 
   @override
   Widget build(BuildContext context) {
-    final titleString = index == null ? '話題の新規作成 | 会話ネタ帳' : '話題の編集 | 会話ネタ帳';
-    final indexString = index.toString();
     var localizations = AppLocalizations.of(context);
+    final titleString = index == null
+        ? localizations.topicPageTitleNew
+        : localizations.topicPageTitleEdit;
+    final indexString = index.toString();
 
     return Scaffold(
       appBar: AppBar(
@@ -54,8 +56,9 @@ class _TopicPageState extends State<TopicPage> {
             TextFormField(
               initialValue: summary,
               key: ValueKey('summaryTextField$indexString'),
-              decoration: const InputDecoration(
-                  labelText: 'いいたいこと', hintText: 'この話題で言いたいことを短くまとめましょう。'),
+              decoration: InputDecoration(
+                  labelText: localizations.topicSummary,
+                  hintText: localizations.topicSummaryHint),
               onChanged: (value) {
                 setState(() {
                   summary = value;
@@ -65,10 +68,9 @@ class _TopicPageState extends State<TopicPage> {
             TextFormField(
               initialValue: memo,
               key: ValueKey('memoTextField$indexString'),
-              decoration: const InputDecoration(
-                  labelText: 'メモ',
-                  hintText:
-                      '話題を話すときにチラ見したいことを書きましょう。\n長くしすぎるとスクロールが入って見づらくなるかもしれません。'),
+              decoration: InputDecoration(
+                  labelText: localizations.topicMemo,
+                  hintText: localizations.topicMemoHint),
               maxLines: 10,
               onChanged: (value) {
                 setState(() {
@@ -79,8 +81,9 @@ class _TopicPageState extends State<TopicPage> {
             TextFormField(
               initialValue: tags_string,
               key: ValueKey('tagsStringTextField$indexString'),
-              decoration: const InputDecoration(
-                  labelText: 'タグ', hintText: 'スペースで区切って入力してください。'),
+              decoration: InputDecoration(
+                  labelText: localizations.topicTagsString,
+                  hintText: localizations.topicTagsStringHint),
               onChanged: (value) {
                 setState(() {
                   tags_string = value;
@@ -92,10 +95,10 @@ class _TopicPageState extends State<TopicPage> {
               child: ElevatedButton(
                 key: Key('saveButton'),
                 onPressed: onFormSubmit,
-                child: Text('保存'),
+                child: Text(localizations.save),
               ),
             ),
-            Text('興味のありそうな人'),
+            Text(localizations.topicInterestedPerson),
             Builder(builder: (BuildContext context) {
               if (interestedPersons == null) {
                 return Center(child: Text(localizations.notFound));

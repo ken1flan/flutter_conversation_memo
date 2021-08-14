@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_conversation_memo/widgets/topic_page.dart';
 import 'package:flutter_conversation_memo/models/topic.dart';
 
@@ -16,19 +17,22 @@ class TopicCard extends Card {
                   context: context,
                   barrierDismissible: false,
                   builder: (context) {
+                    var localizations = AppLocalizations.of(context);
+
                     return AlertDialog(
-                      content: Text('${topic.summary}を消しますが、よろしいですか？'),
+                      content:
+                          Text(localizations.topicDeleteConfirm(topic.summary)),
                       actions: <Widget>[
                         TextButton(
                           onPressed: () => Navigator.of(context).pop(),
-                          child: Text('No'),
+                          child: Text(localizations.topicDeleteConfirmNo),
                         ),
                         TextButton(
                           onPressed: () async {
                             await Topic.box().deleteAt(index);
                             Navigator.of(context).pop();
                           },
-                          child: Text('Yes'),
+                          child: Text(localizations.topicDeleteConfirmYes),
                         )
                       ],
                     );

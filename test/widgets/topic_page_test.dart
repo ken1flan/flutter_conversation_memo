@@ -19,7 +19,7 @@ void main() async {
         (WidgetTester tester) async {
       await tester.pumpWidget(wrapWithMaterial(TopicPage()));
 
-      expect(find.text('話題の新規作成 | 会話ネタ帳', skipOffstage: false), findsOneWidget);
+      expect(find.text('話題の新規作成', skipOffstage: false), findsOneWidget);
     });
   });
 
@@ -30,7 +30,7 @@ void main() async {
 
       await tester.pumpWidget(wrapWithMaterial(TopicPage(index: index)));
 
-      expect(find.text('話題の編集 | 会話ネタ帳', skipOffstage: false), findsOneWidget);
+      expect(find.text('話題の編集', skipOffstage: false), findsOneWidget);
     });
   });
 }
