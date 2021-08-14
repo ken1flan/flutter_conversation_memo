@@ -39,7 +39,7 @@ void main() async {
       await tester.tap(find.byIcon(Icons.add));
       await tester.pump();
 
-      expect(find.text('人の新規作成 | 会話ネタ帳', skipOffstage: false), findsOneWidget);
+      expect(find.text('人の新規作成', skipOffstage: false), findsOneWidget);
     });
 
     testWidgets('Personを長くタップしたとき、削除ダイアログが表示され、Yesを押したら消えること',
@@ -48,7 +48,7 @@ void main() async {
       await tester.longPress(find.text('Yamada'));
       await tester.pump();
 
-      await tester.tap(find.text('Yes'));
+      await tester.tap(find.text('はい、削除します'));
       await tester.pump();
 
       expect(find.text('まだありません。'), findsOneWidget);
@@ -60,7 +60,7 @@ void main() async {
       await tester.longPress(find.text('Yamada'));
       await tester.pump();
 
-      await tester.tap(find.text('No'));
+      await tester.tap(find.text('いいえ'));
       await tester.pump();
 
       expect(find.text('Yamada'), findsOneWidget);

@@ -28,7 +28,7 @@ void main() async {
       await tester.tap(find.byIcon(Icons.add));
       await tester.pump();
 
-      expect(find.text('話題の新規作成 | 会話ネタ帳', skipOffstage: false), findsOneWidget);
+      expect(find.text('話題の新規作成', skipOffstage: false), findsOneWidget);
     });
   });
 
@@ -50,7 +50,7 @@ void main() async {
       await tester.tap(find.text('Summary'));
       await tester.pumpAndSettle();
 
-      expect(find.text('話題の編集 | 会話ネタ帳', skipOffstage: false), findsOneWidget);
+      expect(find.text('話題の編集', skipOffstage: false), findsOneWidget);
 
       final index = 0;
       await tester.enterText(
@@ -67,7 +67,7 @@ void main() async {
       await tester.longPress(find.text('Summary'));
       await tester.pump();
 
-      await tester.tap(find.text('Yes'));
+      await tester.tap(find.text('はい、削除します'));
       await tester.pump();
 
       expect(find.text('まだありません。'), findsOneWidget);
@@ -79,7 +79,7 @@ void main() async {
       await tester.longPress(find.text('Summary'));
       await tester.pump();
 
-      await tester.tap(find.text('No'));
+      await tester.tap(find.text('いいえ'));
       await tester.pump();
 
       expect(find.text('Summary'), findsOneWidget);

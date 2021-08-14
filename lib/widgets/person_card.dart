@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_conversation_memo/widgets/person_page.dart';
 import 'package:flutter_conversation_memo/models/person.dart';
 
@@ -16,19 +17,21 @@ class PersonCard extends Card {
                   context: context,
                   barrierDismissible: false,
                   builder: (context) {
+                    var localizations = AppLocalizations.of(context);
                     return AlertDialog(
-                      content: Text('${person.name}を消しますが、よろしいですか？'),
+                      content:
+                          Text(localizations.personDeleteConfirm(person.name)),
                       actions: <Widget>[
                         TextButton(
                           onPressed: () => Navigator.of(context).pop(),
-                          child: Text('No'),
+                          child: Text(localizations.personDeleteConfirmNo),
                         ),
                         TextButton(
                           onPressed: () async {
                             await Person.deleteAt(index);
                             Navigator.of(context).pop();
                           },
-                          child: Text('Yes'),
+                          child: Text(localizations.personDeleteConfirmYes),
                         )
                       ],
                     );
