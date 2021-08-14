@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.flutter_conversation_memo">
    <application
-        android:label="flutter_conversation_memo"
+        android:label="Topic Matcher"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
