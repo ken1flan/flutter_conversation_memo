@@ -37,13 +37,17 @@ dependencies:
 dev_dependencies:
   hive_generator: ^1.1.0
   build_runner: ^2.0.3
+  flutter_app_name: ^0.1.0
+  flutter_launcher_icons: "^0.9.1"
   flutter_test:
     sdk: flutter
   pedantic: ^1.11.0
-  flutter_launcher_icons: "^0.9.1"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
+
+flutter_app_name:
+  name: "Topic Matcher"
 
 flutter_icons:
   android: true
