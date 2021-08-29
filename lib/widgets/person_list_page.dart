@@ -19,7 +19,7 @@ class PersonListPage extends StatelessWidget {
       ),
       drawer: createDrawer(context),
       body: ValueListenableBuilder(
-        valueListenable: Person.box().listenable(),
+        valueListenable: Person.internalBox.listenable(),
         builder: (context, Box<Person> box, _) {
           if (box.values.isEmpty) {
             return Center(

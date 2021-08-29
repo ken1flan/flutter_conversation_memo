@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_conversation_memo/main.dart';
@@ -26,6 +28,14 @@ class TopicListPage extends StatelessWidget {
                   child: Text(localizations.notFound),
                 );
               }
+              // 更新日逆順にしたtopicのリストを作る
+              // Topicのリストを得る
+              var topics = box.toMap();
+              var sortedTopics = SplayTreeMap.from(
+                  topics,
+                  (a, b) =>
+                      topics[a].updated_at.compareTo(topics[b].updated_at));
+              // 並べ替える
               return ListView.builder(
                 itemCount: box.values.length,
                 itemBuilder: (context, index) {

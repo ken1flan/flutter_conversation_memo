@@ -6,11 +6,11 @@ part 'person.g.dart';
 const int PersonTypeId = 1;
 
 @HiveType(typeId: PersonTypeId)
-class Person {
+class Person extends HiveObject {
   static const boxName = 'personBox';
   static const String TAG_SEPARATOR = ' ';
 
-  static Box<Person> _box;
+  static Box<Person> internalBox;
   int index;
 
   @HiveField(0)
@@ -30,25 +30,21 @@ class Person {
   static Future<void> initialize({memory_box = false}) async {
     Hive.registerAdapter(PersonAdapter());
     var bytes = memory_box ? Uint8List(0) : null;
-    _box = await Hive.openBox<Person>(boxName, bytes: bytes);
-  }
-
-  static Box<Person> box() {
-    return _box;
+    internalBox = await Hive.openBox<Person>(boxName, bytes: bytes);
   }
 
   static Person getAt(int index) {
-    var person = box().getAt(index);
+    var person = internalBox.getAt(index);
     person.index = index;
     return person;
   }
 
   static Future<void> deleteAt(int index) async {
-    return box().deleteAt(index);
+    return internalBox.deleteAt(index);
   }
 
   static Map<dynamic, Person> searchByTags(List<String> tags) {
-    var persons = box().toMap();
+    var persons = internalBox.toMap();
 
     persons.removeWhere((index, person) {
       return !(person.tags().any((person_tag) {
@@ -62,15 +58,16 @@ class Person {
     return persons;
   }
 
-  void save() {
-    var box = Person.box();
+  @override
+  Future<void> save() {
+    var box = Person.internalBox;
     updated_at = DateTime.now().toUtc();
 
     if (index == null) {
       created_at = updated_at;
-      box.add(this);
+      return box.add(this);
     } else {
-      box.putAt(index, this);
+      return super.save();
     }
   }
 
