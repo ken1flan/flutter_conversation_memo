@@ -38,10 +38,6 @@ class Topic extends HiveObject {
     return topic;
   }
 
-  static Future<void> deleteAt(int index) async {
-    return internalBox.deleteAt(index);
-  }
-
   static Map<dynamic, Topic> searchByTags(List<String> tags) {
     var topics = internalBox.toMap();
 

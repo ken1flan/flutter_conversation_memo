@@ -28,7 +28,7 @@ class PersonCard extends Card {
                         ),
                         TextButton(
                           onPressed: () async {
-                            await Person.deleteAt(index);
+                            await person.delete();
                             Navigator.of(context).pop();
                           },
                           child: Text(localizations.personDeleteConfirmYes),

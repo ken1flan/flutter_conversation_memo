@@ -39,10 +39,6 @@ class Person extends HiveObject {
     return person;
   }
 
-  static Future<void> deleteAt(int index) async {
-    return internalBox.deleteAt(index);
-  }
-
   static Map<dynamic, Person> searchByTags(List<String> tags) {
     var persons = internalBox.toMap();
 
