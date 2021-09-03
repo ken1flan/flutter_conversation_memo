@@ -29,7 +29,7 @@ class TopicCard extends Card {
                         ),
                         TextButton(
                           onPressed: () async {
-                            await Topic.box().deleteAt(index);
+                            await topic.delete();
                             Navigator.of(context).pop();
                           },
                           child: Text(localizations.topicDeleteConfirmYes),

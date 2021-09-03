@@ -20,8 +20,8 @@ void main() async {
     });
 
     group('1件あったとき', () {
-      setUpAll(() {
-        Topic('omoroikoto', 'memo\nmemo', 'tag1 tag2', null, null).save();
+      setUpAll(() async {
+        await Topic('omoroikoto', 'memo\nmemo', 'tag1 tag2', null, null).save();
       });
 
       test('存在するindexを指定したとき、Topicが取得できること', () {
@@ -94,7 +94,6 @@ void main() async {
 
       test('タグに空の配列を指定したとき、空のリストを返すこと', () {
         var tags = <String>[];
-        // expect(Topic.searchByTags(tags), equals(Topic.box().toMap()));
         expect(Topic.searchByTags(tags), isEmpty);
       });
 

@@ -34,7 +34,7 @@ void main() async {
 
   group('Topicが1個のとき', () {
     setUp(() async {
-      var box = Topic.box();
+      var box = Topic.internalBox;
       await box
           .add(Topic('Summary', 'Memo', '', DateTime.now(), DateTime.now()));
     });

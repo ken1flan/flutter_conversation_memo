@@ -5,11 +5,11 @@ part 'topic.g.dart';
 const int TopicTypeId = 0;
 
 @HiveType(typeId: TopicTypeId)
-class Topic {
+class Topic extends HiveObject {
   static const String boxName = 'topicBox';
   static const String TAG_SEPARATOR = ' ';
 
-  static Box<Topic> _box;
+  static Box<Topic> internalBox;
   int index;
 
   @HiveField(0)
@@ -29,25 +29,17 @@ class Topic {
   static Future<void> initialize({memory_box = false}) async {
     Hive.registerAdapter(TopicAdapter());
     var bytes = memory_box ? Uint8List(0) : null;
-    _box = await Hive.openBox<Topic>(boxName, bytes: bytes);
-  }
-
-  static Box<Topic> box() {
-    return _box;
+    internalBox = await Hive.openBox<Topic>(boxName, bytes: bytes);
   }
 
   static Topic getAt(int index) {
-    var topic = box().getAt(index);
+    var topic = internalBox.getAt(index);
     topic.index = index;
     return topic;
   }
 
-  static Future<void> deleteAt(int index) async {
-    return box().deleteAt(index);
-  }
-
   static Map<dynamic, Topic> searchByTags(List<String> tags) {
-    var topics = box().toMap();
+    var topics = internalBox.toMap();
 
     topics.removeWhere((index, topic) {
       return !(topic.tags().any((topic_tag) {
@@ -61,15 +53,16 @@ class Topic {
     return topics;
   }
 
-  void save() {
-    var box = Topic.box();
+  @override
+  Future<void> save() {
+    var box = Topic.internalBox;
     updated_at = DateTime.now().toUtc();
 
     if (index == null) {
       created_at = updated_at;
-      box.add(this);
+      return box.add(this);
     } else {
-      box.putAt(index, this);
+      return super.save();
     }
   }
 

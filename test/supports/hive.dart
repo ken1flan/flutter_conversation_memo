@@ -12,8 +12,8 @@ Future<void> initializeHive() async {
 }
 
 Future<void> tearDownHive() async {
-  await Topic.box().clear();
-  await Person.box().clear();
+  await Topic.internalBox.clear();
+  await Person.internalBox.clear();
 }
 
 void finalizeHive() async {
