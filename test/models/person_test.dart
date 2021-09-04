@@ -12,6 +12,33 @@ void main() async {
     await tearDownHive();
   });
 
+  group('.get(key)', () {
+    group('1件もないとき', () {
+      test('存在しないindexを指定したとき、RangeErrorになること', () {
+        expect(Person.get(999), equals(null));
+      });
+    });
+
+    group('1件あったとき', () {
+      setUpAll(() {
+        Person('yamada', 'memo\nmemo', 'tag1 tag2', null, null).save();
+      });
+
+      test('存在するkeyを指定したとき、Personが取得できること', () async {
+        var key = Person.internalBox.getAt(0).key;
+        var person = Person.get(key);
+
+        expect(person.name, equals('yamada'));
+        expect(person.memo, equals('memo\nmemo'));
+        expect(person.tags_string, equals('tag1 tag2'));
+      });
+
+      test('存在しないindexを指定したとき、RangeErrorになること', () {
+        expect(Person.get('notExistKey'), equals(null));
+      });
+    });
+  });
+
   group('.getAt(index)', () {
     group('1件もないとき', () {
       test('存在しないindexを指定したとき、RangeErrorになること', () {

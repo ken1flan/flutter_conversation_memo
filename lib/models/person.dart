@@ -33,6 +33,10 @@ class Person extends HiveObject {
     internalBox = await Hive.openBox<Person>(boxName, bytes: bytes);
   }
 
+  static Person get(dynamic key) {
+    return internalBox.get(key);
+  }
+
   static Person getAt(int index) {
     var person = internalBox.getAt(index);
     person.index = index;
