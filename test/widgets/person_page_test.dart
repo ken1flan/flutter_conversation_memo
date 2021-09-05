@@ -17,7 +17,8 @@ void main() async {
   group('Personが存在しないとき', () {
     testWidgets('Personが指定されていないとき、新規作成ページが表示されていること',
         (WidgetTester tester) async {
-      await tester.pumpWidget(wrapWithMaterial(PersonPage()));
+      var person = Person(null, null, null, null, null);
+      await tester.pumpWidget(wrapWithMaterial(PersonPage(person)));
 
       expect(find.text('人の新規作成', skipOffstage: false), findsOneWidget);
     });
@@ -30,9 +31,9 @@ void main() async {
 
     testWidgets('Personが指定されているとき、編集ページが表示されていること',
         (WidgetTester tester) async {
-      var index = 0;
+      var person = Person.internalBox.getAt(0);
 
-      await tester.pumpWidget(wrapWithMaterial(PersonPage(index: index)));
+      await tester.pumpWidget(wrapWithMaterial(PersonPage(person)));
 
       expect(find.text('人の編集', skipOffstage: false), findsOneWidget);
     });

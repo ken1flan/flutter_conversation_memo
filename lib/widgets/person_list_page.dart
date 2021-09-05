@@ -48,7 +48,8 @@ class PersonListPage extends StatelessWidget {
     Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => PersonPage(),
+          builder: (context) =>
+              PersonPage(Person(null, null, null, null, null)),
         ));
   }
 }

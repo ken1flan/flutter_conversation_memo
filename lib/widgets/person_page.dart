@@ -6,16 +6,15 @@ import 'package:flutter_conversation_memo/widgets/topic_card.dart';
 
 class PersonPage extends StatefulWidget {
   final formKey = GlobalKey<FormState>();
-  final int index;
+  final Person person;
 
-  PersonPage({this.index});
+  PersonPage(this.person);
 
   @override
-  _PersonPageState createState() => _PersonPageState(index);
+  _PersonPageState createState() => _PersonPageState(person);
 }
 
 class _PersonPageState extends State<PersonPage> {
-  int index;
   Person person;
   String name = '';
   String memo = '';
@@ -24,22 +23,18 @@ class _PersonPageState extends State<PersonPage> {
   DateTime updated_at;
   Map<dynamic, Topic> interestedTopics;
 
-  _PersonPageState(index) {
-    this.index = index;
-    if (index != null) {
-      person = Person.getAt(index);
-      name = person?.name;
-      memo = person?.memo;
-      tags_string = person?.tags_string;
-
-      interestedTopics = Topic.searchByTags(person.tags());
-    }
+  _PersonPageState(Person person) {
+    this.person = person;
+    name = person?.name;
+    memo = person?.memo;
+    tags_string = person?.tags_string;
+    interestedTopics = Topic.searchByTags(person.tags());
   }
 
   @override
   Widget build(BuildContext context) {
     var localizations = AppLocalizations.of(context);
-    final titleString = index == null
+    final titleString = person.key == null
         ? localizations.personPageTitleNew
         : localizations.personPageTitleEdit;
 
@@ -113,16 +108,11 @@ class _PersonPageState extends State<PersonPage> {
   }
 
   void onFormSubmit() {
-    var person;
-    if (index == null) {
-      person = Person(name, memo, tags_string, created_at, updated_at);
-    } else {
-      person = Person.getAt(index);
-      person.name = name;
-      person.memo = memo;
-      person.tags_string = tags_string;
-    }
+    person.name = name;
+    person.memo = memo;
+    person.tags_string = tags_string;
     person.save();
+
     Navigator.of(context).pop();
   }
 }
