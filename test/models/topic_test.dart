@@ -12,6 +12,33 @@ void main() async {
     await tearDownHive();
   });
 
+  group('.get(key)', () {
+    group('1件もないとき', () {
+      test('存在しないindexを指定したとき、nullになること', () {
+        expect(Topic.get(999), equals(null));
+      });
+    });
+
+    group('1件あったとき', () {
+      setUpAll(() async {
+        await Topic('omoroikoto', 'memo\nmemo', 'tag1 tag2', null, null).save();
+      });
+
+      test('存在するindexを指定したとき、Topicが取得できること', () {
+        var orgTopic = Topic.internalBox.getAt(0);
+
+        var topic = Topic.get(orgTopic.key);
+        expect(topic.summary, equals('omoroikoto'));
+        expect(topic.memo, equals('memo\nmemo'));
+        expect(topic.tags_string, equals('tag1 tag2'));
+      });
+
+      test('存在しないindexを指定したとき、RangeErrorになること', () {
+        expect(Topic.get('notExistKey'), equals(null));
+      });
+    });
+  });
+
   group('.getAt(index)', () {
     group('1件もないとき', () {
       test('存在しないindexを指定したとき、RangeErrorになること', () {

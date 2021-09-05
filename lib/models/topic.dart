@@ -32,6 +32,10 @@ class Topic extends HiveObject {
     internalBox = await Hive.openBox<Topic>(boxName, bytes: bytes);
   }
 
+  static Topic get(dynamic key) {
+    return internalBox.get(key);
+  }
+
   static Topic getAt(int index) {
     var topic = internalBox.getAt(index);
     topic.index = index;
