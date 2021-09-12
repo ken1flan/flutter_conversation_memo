@@ -21,6 +21,14 @@ void main() async {
 
       expect(find.text('まだありません。'), findsOneWidget);
     });
+
+    testWidgets('新規作成ボタンを押したとき、新規追加ページが開くこと', (WidgetTester tester) async {
+      await tester.pumpWidget(wrapWithMaterial(PersonListPage()));
+      await tester.tap(find.byIcon(Icons.add));
+      await tester.pump();
+
+      expect(find.text('人の新規作成', skipOffstage: false), findsOneWidget);
+    });
   });
 
   group('Personが1個のとき', () {
@@ -32,6 +40,22 @@ void main() async {
       await tester.pumpWidget(wrapWithMaterial(PersonListPage()));
 
       expect(find.text('Yamada'), findsOneWidget);
+    });
+
+    testWidgets('タップしたとき、編集後、変更が反映されていること', (WidgetTester tester) async {
+      await tester.pumpWidget(wrapWithMaterial(PersonListPage()));
+      await tester.tap(find.text('Yamada'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('人の編集', skipOffstage: false), findsOneWidget);
+
+      final index = 0;
+      await tester.enterText(
+          find.byKey(ValueKey('nameTextField${index.toString()}')), '山田');
+      await tester.tap(find.text('保存'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('山田'), findsOneWidget);
     });
 
     testWidgets('新規作成ボタンを押したとき、新規追加ページが開くこと', (WidgetTester tester) async {
@@ -54,7 +78,7 @@ void main() async {
       expect(find.text('まだありません。'), findsOneWidget);
     });
 
-    testWidgets('Topicを長くタップしたとき、削除ダイアログが表示され、Noを押したら消えること',
+    testWidgets('Personを長くタップしたとき、削除ダイアログが表示され、Noを押したら消えること',
         (WidgetTester tester) async {
       await tester.pumpWidget(wrapWithMaterial(PersonListPage()));
       await tester.longPress(find.text('Yamada'));
