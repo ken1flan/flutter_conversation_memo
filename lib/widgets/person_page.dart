@@ -42,6 +42,7 @@ class _PersonPageState extends State<PersonPage> {
     final titleString = index == null
         ? localizations.personPageTitleNew
         : localizations.personPageTitleEdit;
+    final indexString = index.toString();
 
     return Scaffold(
         appBar: AppBar(
@@ -53,6 +54,7 @@ class _PersonPageState extends State<PersonPage> {
               children: [
                 TextFormField(
                   initialValue: name,
+                  key: ValueKey('nameTextField$indexString'),
                   decoration: InputDecoration(
                     labelText: localizations.personName,
                   ),
@@ -64,6 +66,7 @@ class _PersonPageState extends State<PersonPage> {
                 ),
                 TextFormField(
                   initialValue: memo,
+                  key: ValueKey('memoTextField$indexString'),
                   decoration: InputDecoration(
                     labelText: localizations.personMemo,
                   ),
@@ -76,6 +79,7 @@ class _PersonPageState extends State<PersonPage> {
                 ),
                 TextFormField(
                   initialValue: tags_string,
+                  key: ValueKey('tagsStringTextField$indexString'),
                   decoration: InputDecoration(
                     labelText: localizations.personTagsString,
                     hintText: localizations.personTagsStringHint,
