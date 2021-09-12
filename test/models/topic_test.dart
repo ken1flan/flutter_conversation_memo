@@ -21,7 +21,7 @@ void main() async {
 
     group('1件あったとき', () {
       setUpAll(() async {
-        await Topic('omoroikoto', 'memo\nmemo', 'tag1 tag2', null, null).save();
+        await Topic('omoroikoto', 'memo\nmemo', 'tag1 tag2').save();
       });
 
       test('存在するindexを指定したとき、Topicが取得できること', () {
@@ -40,7 +40,7 @@ void main() async {
   group('#save()', () {
     group('新規作成', () {
       test('保存した内容が取得できること', () {
-        Topic('omoroikoto', 'memo\nmemo', 'tag1 tag2', null, null).save();
+        Topic('omoroikoto', 'memo\nmemo', 'tag1 tag2').save();
 
         var topic = Topic.getAt(0);
         expect(topic.summary, equals('omoroikoto'));
@@ -54,7 +54,7 @@ void main() async {
 
     group('更新', () {
       setUpAll(() {
-        Topic('omoroikoto', 'memo\nmemo', 'tag1 tag2', null, null).save();
+        Topic('omoroikoto', 'memo\nmemo', 'tag1 tag2').save();
       });
 
       test('既存のレコードの内容を変更後、再取得したときに更新後のデータを取得できること', () {
@@ -87,9 +87,9 @@ void main() async {
 
     group('3件登録されているとき', () {
       setUp(() {
-        Topic('omoroikoto', 'memo\nmemo', 'tag1 tag2', null, null).save();
-        Topic('tanoshiikoto', 'memo\nmemo', 'tag3 tag4', null, null).save();
-        Topic('iketerukoto', 'memo\nmemo', 'tag2 tag9', null, null).save();
+        Topic('omoroikoto', 'memo\nmemo', 'tag1 tag2').save();
+        Topic('tanoshiikoto', 'memo\nmemo', 'tag3 tag4').save();
+        Topic('iketerukoto', 'memo\nmemo', 'tag2 tag9').save();
       });
 
       test('タグに空の配列を指定したとき、空のリストを返すこと', () {
@@ -140,7 +140,7 @@ void main() async {
   group('#tags', () {
     group('tags_string = nullのとき', () {
       test('空のリストを返すこと', () {
-        var topic = Topic('omoroikoto', 'memo\nmemo', null, null, null);
+        var topic = Topic('omoroikoto', 'memo\nmemo', null);
 
         expect(topic.tags(), isEmpty);
       });
@@ -148,7 +148,7 @@ void main() async {
 
     group('tags_string = ""のとき', () {
       test('空のリストを返すこと', () {
-        var topic = Topic('omoroikoto', 'memo\nmemo', '', null, null);
+        var topic = Topic('omoroikoto', 'memo\nmemo', '');
 
         print(topic.tags());
         expect(topic.tags(), isEmpty);
@@ -157,7 +157,7 @@ void main() async {
 
     group('tags_string = "tag1"のとき', () {
       test('["tag1"]を返すこと', () {
-        var topic = Topic('omoroikoto', 'memo\nmemo', 'tag1', null, null);
+        var topic = Topic('omoroikoto', 'memo\nmemo', 'tag1');
 
         print(topic.tags());
         expect(topic.tags(), equals(['tag1']));
@@ -166,7 +166,7 @@ void main() async {
 
     group('tags_string = "tag1 tag2"のとき', () {
       test('["tag1", "tag2]を返すこと', () {
-        var topic = Topic('omoroikoto', 'memo\nmemo', 'tag1 tag2', null, null);
+        var topic = Topic('omoroikoto', 'memo\nmemo', 'tag1 tag2');
 
         print(topic.tags());
         expect(topic.tags(), equals(['tag1', 'tag2']));
@@ -175,8 +175,7 @@ void main() async {
 
     group('tags_string = " tag1  tag2 "のとき', () {
       test('["tag1", "tag2]を返すこと', () {
-        var topic =
-            Topic('omoroikoto', 'memo\nmemo', ' tag1  tag2 ', null, null);
+        var topic = Topic('omoroikoto', 'memo\nmemo', ' tag1  tag2 ');
 
         print(topic.tags());
         expect(topic.tags(), equals(['tag1', 'tag2']));

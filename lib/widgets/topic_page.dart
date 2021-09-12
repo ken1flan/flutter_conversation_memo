@@ -24,7 +24,7 @@ class _TopicPageState extends State<TopicPage> {
     if (index != null) {
       topic = Topic.getAt(index);
     } else {
-      topic = Topic('', '', '', null, null);
+      topic = Topic('', '', '');
     }
 
     interestedPersons = Person.searchByTags(topic.tags());

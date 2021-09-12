@@ -25,7 +25,7 @@ void main() async {
 
   group('Personが存在するとき', () {
     setUp(() {
-      Person('Yamada', 'Memo', '', null, null).save();
+      Person('Yamada', 'Memo', '').save();
     });
 
     testWidgets('Personが指定されているとき、編集ページが表示されていること',
