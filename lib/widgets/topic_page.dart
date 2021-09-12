@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:hive/hive.dart';
-import 'package:flutter_conversation_memo/main.dart';
 import 'package:flutter_conversation_memo/models/topic.dart';
 import 'package:flutter_conversation_memo/models/person.dart';
 import 'package:flutter_conversation_memo/widgets/person_card.dart';
@@ -117,18 +115,20 @@ class _TopicPageState extends State<TopicPage> {
   }
 
   void onFormSubmit() {
-    var topicBox = Hive.box<Topic>(topicBoxName);
+    var topic;
+
     if (index == null) {
-      topicBox.add(Topic(summary, memo, tags_string, DateTime.now().toUtc(),
-          DateTime.now().toUtc()));
+      topic = Topic(summary, memo, tags_string, DateTime.now().toUtc(),
+          DateTime.now().toUtc());
     } else {
-      var topic = Topic.getAt(index);
+      topic = Topic.getAt(index);
       topic.summary = summary;
       topic.memo = memo;
       topic.tags_string = tags_string;
       topic.updated_at = DateTime.now().toUtc();
-      topicBox.putAt(index, topic);
     }
+    topic.save();
+
     Navigator.of(context).pop();
   }
 }
