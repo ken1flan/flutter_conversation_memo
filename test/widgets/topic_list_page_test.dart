@@ -34,9 +34,7 @@ void main() async {
 
   group('Topicが1個のとき', () {
     setUp(() async {
-      var box = Topic.internalBox;
-      await box
-          .add(Topic('Summary', 'Memo', '', DateTime.now(), DateTime.now()));
+      await Topic('Summary', 'Memo', '', DateTime.now(), DateTime.now()).save();
     });
 
     testWidgets('表示されていること', (WidgetTester tester) async {
@@ -52,9 +50,10 @@ void main() async {
 
       expect(find.text('話題の編集', skipOffstage: false), findsOneWidget);
 
-      final index = 0;
+      var topic = Topic.internalBox.getAt(0);
       await tester.enterText(
-          find.byKey(ValueKey('summaryTextField${index.toString()}')), 'サマリー');
+          find.byKey(ValueKey('summaryTextField${topic.key.toString()}')),
+          'サマリー');
       await tester.tap(find.text('保存'));
       await tester.pumpAndSettle();
 

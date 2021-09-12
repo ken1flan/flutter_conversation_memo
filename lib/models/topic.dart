@@ -59,14 +59,14 @@ class Topic extends HiveObject {
 
   @override
   Future<void> save() {
-    var box = Topic.internalBox;
     updated_at = DateTime.now().toUtc();
 
     if (index == null) {
       created_at = updated_at;
-      return box.add(this);
+      return Topic.internalBox.add(this);
     } else {
       return super.save();
+      // return internalBox.put(key, this);
     }
   }
 

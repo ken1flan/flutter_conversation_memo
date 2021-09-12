@@ -8,16 +8,15 @@ import 'package:flutter_conversation_memo/widgets/person_card.dart';
 
 class TopicPage extends StatefulWidget {
   final formKey = GlobalKey<FormState>();
-  final int index;
+  final Topic topic;
 
-  TopicPage({this.index});
+  TopicPage(this.topic);
 
   @override
-  _TopicPageState createState() => _TopicPageState(index);
+  _TopicPageState createState() => _TopicPageState(topic);
 }
 
 class _TopicPageState extends State<TopicPage> {
-  int index;
   Topic topic;
   String summary = '';
   String memo = '';
@@ -26,25 +25,22 @@ class _TopicPageState extends State<TopicPage> {
   DateTime updated_at;
   Map<dynamic, Person> interestedPersons;
 
-  _TopicPageState(index) {
-    this.index = index;
-    if (index != null) {
-      topic = Topic.getAt(index);
-      summary = topic?.summary;
-      memo = topic?.memo;
-      tags_string = topic?.tags_string;
+  _TopicPageState(topic) {
+    this.topic = topic;
+    summary = topic?.summary;
+    memo = topic?.memo;
+    tags_string = topic?.tags_string;
 
-      interestedPersons = Person.searchByTags(topic.tags());
-    }
+    interestedPersons = Person.searchByTags(topic.tags());
   }
 
   @override
   Widget build(BuildContext context) {
     var localizations = AppLocalizations.of(context);
-    final titleString = index == null
+    final titleString = topic.key == null
         ? localizations.topicPageTitleNew
         : localizations.topicPageTitleEdit;
-    final indexString = index.toString();
+    final indexString = topic.key.toString();
 
     return Scaffold(
       appBar: AppBar(
@@ -117,18 +113,12 @@ class _TopicPageState extends State<TopicPage> {
   }
 
   void onFormSubmit() {
-    var topicBox = Hive.box<Topic>(topicBoxName);
-    if (index == null) {
-      topicBox.add(Topic(summary, memo, tags_string, DateTime.now().toUtc(),
-          DateTime.now().toUtc()));
-    } else {
-      var topic = Topic.getAt(index);
-      topic.summary = summary;
-      topic.memo = memo;
-      topic.tags_string = tags_string;
-      topic.updated_at = DateTime.now().toUtc();
-      topicBox.putAt(index, topic);
-    }
+    topic.summary = summary;
+    topic.memo = memo;
+    topic.tags_string = tags_string;
+    topic.updated_at = DateTime.now().toUtc();
+    topic.save();
+
     Navigator.of(context).pop();
   }
 }

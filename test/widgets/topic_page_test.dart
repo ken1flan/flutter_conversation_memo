@@ -17,7 +17,8 @@ void main() async {
   group('Topicが存在しないとき', () {
     testWidgets('Topicが指定されていないとき、新規作成ページが表示されていること',
         (WidgetTester tester) async {
-      await tester.pumpWidget(wrapWithMaterial(TopicPage()));
+      var topic = Topic(null, null, null, null, null);
+      await tester.pumpWidget(wrapWithMaterial(TopicPage(topic)));
 
       expect(find.text('話題の新規作成', skipOffstage: false), findsOneWidget);
     });
@@ -26,9 +27,9 @@ void main() async {
   group('Topicが存在するとき', () {
     testWidgets('Topicが指定されているとき、編集ページが表示されていること', (WidgetTester tester) async {
       await Topic('Summary', 'Memo', '', null, null).save();
-      var index = 0;
+      var topic = Topic.internalBox.getAt(0);
 
-      await tester.pumpWidget(wrapWithMaterial(TopicPage(index: index)));
+      await tester.pumpWidget(wrapWithMaterial(TopicPage(topic)));
 
       expect(find.text('話題の編集', skipOffstage: false), findsOneWidget);
     });
