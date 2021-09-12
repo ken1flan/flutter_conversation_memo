@@ -17,23 +17,17 @@ class TopicPage extends StatefulWidget {
 class _TopicPageState extends State<TopicPage> {
   int index;
   Topic topic;
-  String summary = '';
-  String memo = '';
-  String tags_string = '';
-  DateTime created_at;
-  DateTime updated_at;
   Map<dynamic, Person> interestedPersons;
 
   _TopicPageState(index) {
     this.index = index;
     if (index != null) {
       topic = Topic.getAt(index);
-      summary = topic?.summary;
-      memo = topic?.memo;
-      tags_string = topic?.tags_string;
-
-      interestedPersons = Person.searchByTags(topic.tags());
+    } else {
+      topic = Topic('', '', '', null, null);
     }
+
+    interestedPersons = Person.searchByTags(topic.tags());
   }
 
   @override
@@ -52,19 +46,19 @@ class _TopicPageState extends State<TopicPage> {
           padding: const EdgeInsets.all(16),
           child: ListView(children: [
             TextFormField(
-              initialValue: summary,
+              initialValue: topic.summary,
               key: ValueKey('summaryTextField$indexString'),
               decoration: InputDecoration(
                   labelText: localizations.topicSummary,
                   hintText: localizations.topicSummaryHint),
               onChanged: (value) {
                 setState(() {
-                  summary = value;
+                  topic.summary = value;
                 });
               },
             ),
             TextFormField(
-              initialValue: memo,
+              initialValue: topic.memo,
               key: ValueKey('memoTextField$indexString'),
               decoration: InputDecoration(
                   labelText: localizations.topicMemo,
@@ -72,19 +66,19 @@ class _TopicPageState extends State<TopicPage> {
               maxLines: 10,
               onChanged: (value) {
                 setState(() {
-                  memo = value;
+                  topic.memo = value;
                 });
               },
             ),
             TextFormField(
-              initialValue: tags_string,
+              initialValue: topic.tags_string,
               key: ValueKey('tagsStringTextField$indexString'),
               decoration: InputDecoration(
                   labelText: localizations.topicTagsString,
                   hintText: localizations.topicTagsStringHint),
               onChanged: (value) {
                 setState(() {
-                  tags_string = value;
+                  topic.tags_string = value;
                 });
               },
             ),
@@ -115,20 +109,7 @@ class _TopicPageState extends State<TopicPage> {
   }
 
   void onFormSubmit() {
-    var topic;
-
-    if (index == null) {
-      topic = Topic(summary, memo, tags_string, DateTime.now().toUtc(),
-          DateTime.now().toUtc());
-    } else {
-      topic = Topic.getAt(index);
-      topic.summary = summary;
-      topic.memo = memo;
-      topic.tags_string = tags_string;
-      topic.updated_at = DateTime.now().toUtc();
-    }
     topic.save();
-
     Navigator.of(context).pop();
   }
 }

@@ -17,23 +17,18 @@ class PersonPage extends StatefulWidget {
 class _PersonPageState extends State<PersonPage> {
   int index;
   Person person;
-  String name = '';
-  String memo = '';
-  String tags_string = '';
-  DateTime created_at;
-  DateTime updated_at;
   Map<dynamic, Topic> interestedTopics;
 
   _PersonPageState(index) {
     this.index = index;
+
     if (index != null) {
       person = Person.getAt(index);
-      name = person?.name;
-      memo = person?.memo;
-      tags_string = person?.tags_string;
-
-      interestedTopics = Topic.searchByTags(person.tags());
+    } else {
+      person = Person('', '', '', null, null);
     }
+
+    interestedTopics = Topic.searchByTags(person.tags());
   }
 
   @override
@@ -53,19 +48,19 @@ class _PersonPageState extends State<PersonPage> {
             child: ListView(
               children: [
                 TextFormField(
-                  initialValue: name,
+                  initialValue: person.name,
                   key: ValueKey('nameTextField$indexString'),
                   decoration: InputDecoration(
                     labelText: localizations.personName,
                   ),
                   onChanged: (value) {
                     setState(() {
-                      name = value;
+                      person.name = value;
                     });
                   },
                 ),
                 TextFormField(
-                  initialValue: memo,
+                  initialValue: person.memo,
                   key: ValueKey('memoTextField$indexString'),
                   decoration: InputDecoration(
                     labelText: localizations.personMemo,
@@ -73,12 +68,12 @@ class _PersonPageState extends State<PersonPage> {
                   maxLines: 10,
                   onChanged: (value) {
                     setState(() {
-                      memo = value;
+                      person.memo = value;
                     });
                   },
                 ),
                 TextFormField(
-                  initialValue: tags_string,
+                  initialValue: person.tags_string,
                   key: ValueKey('tagsStringTextField$indexString'),
                   decoration: InputDecoration(
                     labelText: localizations.personTagsString,
@@ -86,7 +81,7 @@ class _PersonPageState extends State<PersonPage> {
                   ),
                   onChanged: (value) {
                     setState(() {
-                      tags_string = value;
+                      person.tags_string = value;
                     });
                   },
                 ),
@@ -117,15 +112,6 @@ class _PersonPageState extends State<PersonPage> {
   }
 
   void onFormSubmit() {
-    var person;
-    if (index == null) {
-      person = Person(name, memo, tags_string, created_at, updated_at);
-    } else {
-      person = Person.getAt(index);
-      person.name = name;
-      person.memo = memo;
-      person.tags_string = tags_string;
-    }
     person.save();
     Navigator.of(context).pop();
   }
