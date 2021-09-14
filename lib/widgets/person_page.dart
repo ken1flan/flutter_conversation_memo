@@ -25,7 +25,7 @@ class _PersonPageState extends State<PersonPage> {
     if (index != null) {
       person = Person.getAt(index);
     } else {
-      person = Person('', '', '', null, null);
+      person = Person('', '', '');
     }
 
     interestedTopics = Topic.searchByTags(person.tags());

@@ -24,8 +24,8 @@ class Person extends HiveObject {
   @HiveField(4)
   DateTime updated_at;
 
-  Person(
-      this.name, this.memo, this.tags_string, this.created_at, this.updated_at);
+  Person(this.name, this.memo, this.tags_string,
+      [this.created_at, this.updated_at]);
 
   static Future<void> initialize({memory_box = false}) async {
     Hive.registerAdapter(PersonAdapter());
@@ -58,9 +58,9 @@ class Person extends HiveObject {
   Future<void> save() {
     var box = Person.internalBox;
     updated_at = DateTime.now().toUtc();
+    created_at ??= updated_at;
 
     if (index == null) {
-      created_at = updated_at;
       return box.add(this);
     } else {
       return super.save();

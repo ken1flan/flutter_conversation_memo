@@ -34,9 +34,7 @@ void main() async {
 
   group('Topicが1個のとき', () {
     setUp(() async {
-      var box = Topic.internalBox;
-      await box
-          .add(Topic('Summary', 'Memo', '', DateTime.now(), DateTime.now()));
+      await Topic('Summary', 'Memo', '').save();
     });
 
     testWidgets('表示されていること', (WidgetTester tester) async {

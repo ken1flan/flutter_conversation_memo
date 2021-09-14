@@ -25,7 +25,7 @@ void main() async {
 
   group('Topicが存在するとき', () {
     testWidgets('Topicが指定されているとき、編集ページが表示されていること', (WidgetTester tester) async {
-      await Topic('Summary', 'Memo', '', null, null).save();
+      await Topic('Summary', 'Memo', '').save();
       var index = 0;
 
       await tester.pumpWidget(wrapWithMaterial(TopicPage(index: index)));

@@ -21,7 +21,7 @@ void main() async {
 
     group('1件あったとき', () {
       setUpAll(() {
-        Person('yamada', 'memo\nmemo', 'tag1 tag2', null, null).save();
+        Person('yamada', 'memo\nmemo', 'tag1 tag2').save();
       });
 
       test('存在するindexを指定したとき、Personが取得できること', () {
@@ -40,7 +40,7 @@ void main() async {
   group('#save()', () {
     group('新規作成', () {
       test('保存した内容が取得できること', () {
-        Person('yamada', 'memo\nmemo', 'tag1 tag2', null, null).save();
+        Person('yamada', 'memo\nmemo', 'tag1 tag2').save();
 
         var person = Person.getAt(0);
         expect(person.name, equals('yamada'));
@@ -54,7 +54,7 @@ void main() async {
 
     group('更新', () {
       setUpAll(() {
-        Person('yamada', 'memo\nmemo', 'tag1 tag2', null, null).save();
+        Person('yamada', 'memo\nmemo', 'tag1 tag2').save();
       });
 
       test('既存のレコードの内容を変更後、再取得したときに更新後のデータを取得できること', () {
@@ -87,9 +87,9 @@ void main() async {
 
     group('3件登録されているとき', () {
       setUp(() {
-        Person('yamada', 'memo\nmemo', 'tag1 tag2', null, null).save();
-        Person('sato', 'memo\nmemo', 'tag3 tag4', null, null).save();
-        Person('tanaka', 'memo\nmemo', 'tag2 tag9', null, null).save();
+        Person('yamada', 'memo\nmemo', 'tag1 tag2').save();
+        Person('sato', 'memo\nmemo', 'tag3 tag4').save();
+        Person('tanaka', 'memo\nmemo', 'tag2 tag9').save();
       });
 
       test('タグに空の配列を指定したとき、空のリストを返すこと', () {
@@ -141,7 +141,7 @@ void main() async {
   group('#tags', () {
     group('tags_string = nullのとき', () {
       test('空のリストを返すこと', () {
-        var person = Person('yamada', 'memo\nmemo', null, null, null);
+        var person = Person('yamada', 'memo\nmemo', null);
 
         expect(person.tags(), isEmpty);
       });
@@ -149,7 +149,7 @@ void main() async {
 
     group('tags_string = ""のとき', () {
       test('空のリストを返すこと', () {
-        var person = Person('yamada', 'memo\nmemo', '', null, null);
+        var person = Person('yamada', 'memo\nmemo', '');
 
         print(person.tags());
         expect(person.tags(), isEmpty);
@@ -158,7 +158,7 @@ void main() async {
 
     group('tags_string = "tag1"のとき', () {
       test('["tag1"]を返すこと', () {
-        var person = Person('yamada', 'memo\nmemo', 'tag1', null, null);
+        var person = Person('yamada', 'memo\nmemo', 'tag1');
 
         print(person.tags());
         expect(person.tags(), equals(['tag1']));
@@ -167,7 +167,7 @@ void main() async {
 
     group('tags_string = "tag1 tag2"のとき', () {
       test('["tag1", "tag2]を返すこと', () {
-        var person = Person('yamada', 'memo\nmemo', 'tag1 tag2', null, null);
+        var person = Person('yamada', 'memo\nmemo', 'tag1 tag2');
 
         print(person.tags());
         expect(person.tags(), equals(['tag1', 'tag2']));
@@ -176,7 +176,7 @@ void main() async {
 
     group('tags_string = " tag1  tag2 "のとき', () {
       test('["tag1", "tag2]を返すこと', () {
-        var person = Person('yamada', 'memo\nmemo', ' tag1  tag2 ', null, null);
+        var person = Person('yamada', 'memo\nmemo', ' tag1  tag2 ');
 
         print(person.tags());
         expect(person.tags(), equals(['tag1', 'tag2']));
