@@ -6,37 +6,32 @@ import 'package:flutter_conversation_memo/widgets/person_card.dart';
 
 class TopicPage extends StatefulWidget {
   final formKey = GlobalKey<FormState>();
-  final int index;
+  final Topic topic;
 
-  TopicPage({this.index});
+  TopicPage({this.topic});
 
   @override
-  _TopicPageState createState() => _TopicPageState(index);
+  _TopicPageState createState() => _TopicPageState(topic);
 }
 
 class _TopicPageState extends State<TopicPage> {
-  int index;
   Topic topic;
   Map<dynamic, Person> interestedPersons;
 
-  _TopicPageState(index) {
-    this.index = index;
-    if (index != null) {
-      topic = Topic.getAt(index);
-    } else {
-      topic = Topic('', '', '');
-    }
+  _TopicPageState(topic) {
+    this.topic = topic;
+    this.topic ??= Topic('', '', '');
 
-    interestedPersons = Person.searchByTags(topic.tags());
+    interestedPersons = Person.searchByTags(this.topic.tags());
   }
 
   @override
   Widget build(BuildContext context) {
     var localizations = AppLocalizations.of(context);
-    final titleString = index == null
+    final titleString = topic.key == null
         ? localizations.topicPageTitleNew
         : localizations.topicPageTitleEdit;
-    final indexString = index.toString();
+    final indexString = topic.key.toString();
 
     return Scaffold(
       appBar: AppBar(

@@ -71,10 +71,12 @@ class TopicCard extends Card {
         );
 
   static void _editTopic(BuildContext context, int index) {
+    var topic = Topic.getAt(index);
+
     Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => TopicPage(index: index),
+          builder: (context) => TopicPage(topic: topic),
         ));
   }
 }
