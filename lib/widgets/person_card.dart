@@ -72,10 +72,12 @@ class PersonCard extends Card {
         );
 
   static void _editPerson(BuildContext context, int index) {
+    var person = Person.getAt(index);
+
     Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => PersonPage(index: index),
+          builder: (context) => PersonPage(person: person),
         ));
   }
 }
