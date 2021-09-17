@@ -10,7 +10,7 @@ class PersonCard extends Card {
           clipBehavior: Clip.antiAlias,
           child: InkWell(
             onTap: () {
-              _editPerson(context, index);
+              _editPerson(context, person);
             },
             onLongPress: () {
               showDialog(
@@ -71,9 +71,7 @@ class PersonCard extends Card {
           ),
         );
 
-  static void _editPerson(BuildContext context, int index) {
-    var person = Person.getAt(index);
-
+  static void _editPerson(BuildContext context, Person person) {
     Navigator.push(
         context,
         MaterialPageRoute(
