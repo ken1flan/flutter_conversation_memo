@@ -10,7 +10,7 @@ class TopicCard extends Card {
           clipBehavior: Clip.antiAlias,
           child: InkWell(
             onTap: () {
-              _editTopic(context, index);
+              _editTopic(context, topic);
             },
             onLongPress: () {
               showDialog(
@@ -70,9 +70,7 @@ class TopicCard extends Card {
           ),
         );
 
-  static void _editTopic(BuildContext context, int index) {
-    var topic = Topic.getAt(index);
-
+  static void _editTopic(BuildContext context, Topic topic) {
     Navigator.push(
         context,
         MaterialPageRoute(
