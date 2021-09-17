@@ -59,7 +59,7 @@ class Topic extends HiveObject {
     updated_at = DateTime.now().toUtc();
     created_at ??= updated_at;
 
-    if (index == null) {
+    if (key == null) {
       return box.add(this);
     } else {
       return super.save();
