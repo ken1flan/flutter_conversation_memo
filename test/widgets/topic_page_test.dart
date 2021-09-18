@@ -26,9 +26,9 @@ void main() async {
   group('Topicが存在するとき', () {
     testWidgets('Topicが指定されているとき、編集ページが表示されていること', (WidgetTester tester) async {
       await Topic('Summary', 'Memo', '').save();
-      var index = 0;
+      var topic = Topic.getAt(0);
 
-      await tester.pumpWidget(wrapWithMaterial(TopicPage(index: index)));
+      await tester.pumpWidget(wrapWithMaterial(TopicPage(topic: topic)));
 
       expect(find.text('話題の編集', skipOffstage: false), findsOneWidget);
     });

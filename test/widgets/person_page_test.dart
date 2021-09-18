@@ -30,9 +30,9 @@ void main() async {
 
     testWidgets('Personが指定されているとき、編集ページが表示されていること',
         (WidgetTester tester) async {
-      var index = 0;
+      var person = Person.getAt(0);
 
-      await tester.pumpWidget(wrapWithMaterial(PersonPage(index: index)));
+      await tester.pumpWidget(wrapWithMaterial(PersonPage(person: person)));
 
       expect(find.text('人の編集', skipOffstage: false), findsOneWidget);
     });

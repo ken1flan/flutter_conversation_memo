@@ -5,12 +5,12 @@ import 'package:flutter_conversation_memo/widgets/person_page.dart';
 import 'package:flutter_conversation_memo/models/person.dart';
 
 class PersonCard extends Card {
-  PersonCard(BuildContext context, int index, Person person)
+  PersonCard(BuildContext context, Person person)
       : super(
           clipBehavior: Clip.antiAlias,
           child: InkWell(
             onTap: () {
-              _editPerson(context, index);
+              _editPerson(context, person);
             },
             onLongPress: () {
               showDialog(
@@ -71,11 +71,11 @@ class PersonCard extends Card {
           ),
         );
 
-  static void _editPerson(BuildContext context, int index) {
+  static void _editPerson(BuildContext context, Person person) {
     Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => PersonPage(index: index),
+          builder: (context) => PersonPage(person: person),
         ));
   }
 }

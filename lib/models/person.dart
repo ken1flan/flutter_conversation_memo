@@ -39,7 +39,7 @@ class Person extends HiveObject {
     return person;
   }
 
-  static Map<dynamic, Person> searchByTags(List<String> tags) {
+  static List<Person> searchByTags(List<String> tags) {
     var persons = internalBox.toMap();
 
     persons.removeWhere((index, person) {
@@ -51,7 +51,7 @@ class Person extends HiveObject {
       }));
     });
 
-    return persons;
+    return persons.values.toList();
   }
 
   @override
@@ -60,7 +60,7 @@ class Person extends HiveObject {
     updated_at = DateTime.now().toUtc();
     created_at ??= updated_at;
 
-    if (index == null) {
+    if (key == null) {
       return box.add(this);
     } else {
       return super.save();

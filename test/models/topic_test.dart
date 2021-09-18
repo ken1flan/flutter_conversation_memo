@@ -104,10 +104,8 @@ void main() async {
 
       test('1件ヒットするタグを指定したとき、1件のリストを返すこと', () {
         var tags = <String>['tag3', 'tagx'];
-        var summaries = Topic.searchByTags(tags)
-            .values
-            .map((topic) => topic.summary)
-            .toList();
+        var summaries =
+            Topic.searchByTags(tags).map((topic) => topic.summary).toList();
         expect(summaries, contains('tanoshiikoto'));
         expect(summaries, isNot(contains('omoroikoto')));
         expect(summaries, isNot(contains('iketerukoto')));
@@ -115,10 +113,8 @@ void main() async {
 
       test('2件ヒットするタグを指定したとき、2件のリストを返すこと', () {
         var tags = <String>['tagx', 'tag2'];
-        var summaries = Topic.searchByTags(tags)
-            .values
-            .map((topic) => topic.summary)
-            .toList();
+        var summaries =
+            Topic.searchByTags(tags).map((topic) => topic.summary).toList();
         expect(summaries, contains('omoroikoto'));
         expect(summaries, contains('iketerukoto'));
         expect(summaries, isNot(contains('tanoshiikoto')));
@@ -126,10 +122,8 @@ void main() async {
 
       test('1件ヒットするタグを2つ指定したとき、2件のリストを返すこと', () {
         var tags = <String>['tag1', 'tagx', 'tag3'];
-        var summaries = Topic.searchByTags(tags)
-            .values
-            .map((topic) => topic.summary)
-            .toList();
+        var summaries =
+            Topic.searchByTags(tags).map((topic) => topic.summary).toList();
         expect(summaries, contains('omoroikoto'));
         expect(summaries, contains('tanoshiikoto'));
         expect(summaries, isNot(contains('iketerukoto')));

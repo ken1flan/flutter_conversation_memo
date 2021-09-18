@@ -30,7 +30,7 @@ class PersonListPage extends StatelessWidget {
               itemCount: box.values.length,
               itemBuilder: (context, index) {
                 var currentPerson = box.getAt(index);
-                return PersonCard(context, index, currentPerson);
+                return PersonCard(context, currentPerson);
               });
         },
       ),
