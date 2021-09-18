@@ -33,6 +33,14 @@ class Person extends HiveObject {
     internalBox = await Hive.openBox<Person>(boxName, bytes: bytes);
   }
 
+  static bool isEmpty() {
+    return internalBox.isEmpty;
+  }
+
+  static int count() {
+    return internalBox.values.length;
+  }
+
   static Person getAt(int index) {
     var person = internalBox.getAt(index);
     person.index = index;

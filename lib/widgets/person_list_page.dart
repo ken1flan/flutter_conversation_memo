@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'package:flutter_conversation_memo/widgets/drawer.dart';
@@ -20,16 +19,16 @@ class PersonListPage extends StatelessWidget {
       drawer: createDrawer(context),
       body: ValueListenableBuilder(
         valueListenable: Person.internalBox.listenable(),
-        builder: (context, Box<Person> box, _) {
-          if (box.values.isEmpty) {
+        builder: (context, _box, _) {
+          if (Person.isEmpty()) {
             return Center(
               child: Text(localizations.notFound),
             );
           }
           return ListView.builder(
-              itemCount: box.values.length,
+              itemCount: Person.count(),
               itemBuilder: (context, index) {
-                var currentPerson = box.getAt(index);
+                var currentPerson = Person.getAt(index);
                 return PersonCard(context, currentPerson);
               });
         },

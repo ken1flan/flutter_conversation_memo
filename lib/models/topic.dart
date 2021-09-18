@@ -32,6 +32,14 @@ class Topic extends HiveObject {
     internalBox = await Hive.openBox<Topic>(boxName, bytes: bytes);
   }
 
+  static bool isEmpty() {
+    return internalBox.isEmpty;
+  }
+
+  static int count() {
+    return internalBox.values.length;
+  }
+
   static Topic getAt(int index) {
     var topic = internalBox.getAt(index);
     topic.index = index;
