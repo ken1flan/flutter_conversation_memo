@@ -30,7 +30,7 @@ class TopicListPage extends StatelessWidget {
                 itemCount: box.values.length,
                 itemBuilder: (context, index) {
                   var currentTopic = box.getAt(index);
-                  return TopicCard(context, index, currentTopic);
+                  return TopicCard(context, currentTopic);
                 },
               );
             }),

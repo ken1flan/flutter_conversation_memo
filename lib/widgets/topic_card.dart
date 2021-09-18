@@ -5,7 +5,7 @@ import 'package:flutter_conversation_memo/widgets/topic_page.dart';
 import 'package:flutter_conversation_memo/models/topic.dart';
 
 class TopicCard extends Card {
-  TopicCard(BuildContext context, int index, Topic topic)
+  TopicCard(BuildContext context, Topic topic)
       : super(
           clipBehavior: Clip.antiAlias,
           child: InkWell(
