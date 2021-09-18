@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_conversation_memo/main.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter_conversation_memo/widgets/topic_card.dart';
 import 'package:flutter_conversation_memo/widgets/topic_page.dart';
@@ -19,17 +17,17 @@ class TopicListPage extends StatelessWidget {
         ),
         drawer: createDrawer(context),
         body: ValueListenableBuilder(
-            valueListenable: Hive.box<Topic>(topicBoxName).listenable(),
-            builder: (context, Box<Topic> box, _) {
-              if (box.values.isEmpty) {
+            valueListenable: Topic.internalBox.listenable(),
+            builder: (context, _box, _) {
+              if (Topic.isEmpty()) {
                 return Center(
                   child: Text(localizations.notFound),
                 );
               }
               return ListView.builder(
-                itemCount: box.values.length,
+                itemCount: Topic.count(),
                 itemBuilder: (context, index) {
-                  var currentTopic = box.getAt(index);
+                  var currentTopic = Topic.getAt(index);
                   return TopicCard(context, currentTopic);
                 },
               );
