@@ -105,10 +105,8 @@ void main() async {
 
       test('1件ヒットするタグを指定したとき、1件のリストを返すこと', () {
         var tags = <String>['tag3', 'tagx'];
-        var names = Person.searchByTags(tags)
-            .values
-            .map((person) => person.name)
-            .toList();
+        var names =
+            Person.searchByTags(tags).map((person) => person.name).toList();
         expect(names, contains('sato'));
         expect(names, isNot(contains('yamada')));
         expect(names, isNot(contains('tanaka')));
@@ -116,10 +114,8 @@ void main() async {
 
       test('2件ヒットするタグを指定したとき、2件のリストを返すこと', () {
         var tags = <String>['tagx', 'tag2'];
-        var names = Person.searchByTags(tags)
-            .values
-            .map((person) => person.name)
-            .toList();
+        var names =
+            Person.searchByTags(tags).map((person) => person.name).toList();
         expect(names, contains('yamada'));
         expect(names, contains('tanaka'));
         expect(names, isNot(contains('sato')));
@@ -127,10 +123,8 @@ void main() async {
 
       test('1件ヒットするタグを2つ指定したとき、2件のリストを返すこと', () {
         var tags = <String>['tag1', 'tagx', 'tag3'];
-        var names = Person.searchByTags(tags)
-            .values
-            .map((person) => person.name)
-            .toList();
+        var names =
+            Person.searchByTags(tags).map((person) => person.name).toList();
         expect(names, contains('yamada'));
         expect(names, contains('sato'));
         expect(names, isNot(contains('tanaka')));

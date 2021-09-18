@@ -16,7 +16,7 @@ class PersonPage extends StatefulWidget {
 
 class _PersonPageState extends State<PersonPage> {
   Person person;
-  Map<dynamic, Topic> interestedTopics;
+  List<Topic> interestedTopics;
 
   _PersonPageState(person) {
     this.person = person;
@@ -96,7 +96,7 @@ class _PersonPageState extends State<PersonPage> {
                         shrinkWrap: true,
                         itemCount: interestedTopics.length,
                         itemBuilder: (context, index) {
-                          var topic = interestedTopics.values.elementAt(index);
+                          var topic = interestedTopics[index];
                           return TopicCard(context, topic);
                         });
                   }
