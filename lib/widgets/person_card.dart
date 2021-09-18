@@ -5,7 +5,7 @@ import 'package:flutter_conversation_memo/widgets/person_page.dart';
 import 'package:flutter_conversation_memo/models/person.dart';
 
 class PersonCard extends Card {
-  PersonCard(BuildContext context, int index, Person person)
+  PersonCard(BuildContext context, Person person)
       : super(
           clipBehavior: Clip.antiAlias,
           child: InkWell(
