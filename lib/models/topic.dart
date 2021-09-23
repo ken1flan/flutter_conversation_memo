@@ -55,18 +55,13 @@ class Topic extends HiveObject {
   }
 
   static List<Topic> searchByTags(List<String> tags) {
-    var topics = internalBox.toMap();
-
-    topics.removeWhere((index, topic) {
-      return !(topic.tags().any((topic_tag) {
-        // Mapでwhere()が使えないので否定条件でremoveWhere()を使っています。
+    return getAll().where((topic) {
+      return (topic.tags().any((topic_tag) {
         return tags.any((tag) {
           return tag == topic_tag;
         });
       }));
-    });
-
-    return topics.values.toList();
+    }).toList();
   }
 
   @override
