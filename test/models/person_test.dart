@@ -77,6 +77,29 @@ void main() async {
     });
   });
 
+  group('.getAll', () {
+    group('1件も登録されていないとき', () {
+      test('空のリストを返すこと', () {
+        expect(Person.getAll(), isEmpty);
+      });
+    });
+
+    group('3件登録されているとき', () {
+      setUp(() {
+        Person('yamada', 'memo\nmemo', 'tag1 tag2').save();
+        Person('sato', 'memo\nmemo', 'tag3 tag4').save();
+        Person('tanaka', 'memo\nmemo', 'tag2 tag9').save();
+      });
+
+      test('3件のリストを返すこと', () {
+        var summaries = Person.getAll().map((person) => person.name).toList();
+        expect(summaries, contains('yamada'));
+        expect(summaries, contains('sato'));
+        expect(summaries, contains('tanaka'));
+      });
+    });
+  });
+
   group('.searchByTags', () {
     group('1件も登録されていないとき', () {
       test('空のリストを返すこと', () {

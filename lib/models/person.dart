@@ -47,6 +47,14 @@ class Person extends HiveObject {
     return person;
   }
 
+  static List<Person> getAll() {
+    if (isEmpty()) {
+      return [];
+    }
+
+    return internalBox.toMap().values.toList();
+  }
+
   static List<Person> searchByTags(List<String> tags) {
     var persons = internalBox.toMap();
 
