@@ -25,10 +25,11 @@ class PersonListPage extends StatelessWidget {
               child: Text(localizations.notFound),
             );
           }
+          var persons = Person.getAll();
           return ListView.builder(
-              itemCount: Person.count(),
+              itemCount: persons.length,
               itemBuilder: (context, index) {
-                var currentPerson = Person.getAt(index);
+                var currentPerson = persons[index];
                 return PersonCard(context, currentPerson);
               });
         },

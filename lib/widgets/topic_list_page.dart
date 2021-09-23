@@ -24,10 +24,11 @@ class TopicListPage extends StatelessWidget {
                   child: Text(localizations.notFound),
                 );
               }
+              var topics = Topic.getAll();
               return ListView.builder(
-                itemCount: Topic.count(),
+                itemCount: topics.length,
                 itemBuilder: (context, index) {
-                  var currentTopic = Topic.getAt(index);
+                  var currentTopic = topics[index];
                   return TopicCard(context, currentTopic);
                 },
               );

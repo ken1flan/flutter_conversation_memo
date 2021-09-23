@@ -46,6 +46,14 @@ class Topic extends HiveObject {
     return topic;
   }
 
+  static List<Topic> getAll() {
+    if (isEmpty()) {
+      return [];
+    }
+
+    return internalBox.toMap().values.toList();
+  }
+
   static List<Topic> searchByTags(List<String> tags) {
     var topics = internalBox.toMap();
 

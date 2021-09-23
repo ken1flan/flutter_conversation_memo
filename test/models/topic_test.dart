@@ -77,6 +77,29 @@ void main() async {
     });
   });
 
+  group('.getAll', () {
+    group('1件も登録されていないとき', () {
+      test('空のリストを返すこと', () {
+        expect(Topic.getAll(), isEmpty);
+      });
+    });
+
+    group('3件登録されているとき', () {
+      setUp(() {
+        Topic('omoroikoto', 'memo\nmemo', 'tag1 tag2').save();
+        Topic('tanoshiikoto', 'memo\nmemo', 'tag3 tag4').save();
+        Topic('iketerukoto', 'memo\nmemo', 'tag2 tag9').save();
+      });
+
+      test('3件のリストを返すこと', () {
+        var summaries = Topic.getAll().map((topic) => topic.summary).toList();
+        expect(summaries, contains('tanoshiikoto'));
+        expect(summaries, contains('omoroikoto'));
+        expect(summaries, contains('iketerukoto'));
+      });
+    });
+  });
+
   group('.searchByTags', () {
     group('1件も登録されていないとき', () {
       test('空のリストを返すこと', () {
