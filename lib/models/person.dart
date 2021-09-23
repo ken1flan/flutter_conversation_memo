@@ -56,18 +56,13 @@ class Person extends HiveObject {
   }
 
   static List<Person> searchByTags(List<String> tags) {
-    var persons = internalBox.toMap();
-
-    persons.removeWhere((index, person) {
-      return !(person.tags().any((person_tag) {
-        // Mapでwhere()が使えないので否定条件でremoveWhere()を使っています。
+    return getAll().where((person) {
+      return (person.tags().any((person_tag) {
         return tags.any((tag) {
           return tag == person_tag;
         });
       }));
-    });
-
-    return persons.values.toList();
+    }).toList();
   }
 
   @override
