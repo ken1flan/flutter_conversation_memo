@@ -51,7 +51,10 @@ class Topic extends HiveObject {
       return [];
     }
 
-    return internalBox.toMap().values.toList();
+    var topics = internalBox.toMap().values.toList();
+    topics.sort((a, b) => b.updated_at.compareTo(a.updated_at));
+
+    return topics;
   }
 
   static List<Topic> searchByTags(List<String> tags) {

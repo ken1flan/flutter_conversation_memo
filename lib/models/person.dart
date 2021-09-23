@@ -52,7 +52,10 @@ class Person extends HiveObject {
       return [];
     }
 
-    return internalBox.toMap().values.toList();
+    var persons = internalBox.toMap().values.toList();
+    persons.sort((a, b) => b.updated_at.compareTo(a.updated_at));
+
+    return persons;
   }
 
   static List<Person> searchByTags(List<String> tags) {
