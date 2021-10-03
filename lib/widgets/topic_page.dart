@@ -79,6 +79,17 @@ class _TopicPageState extends State<TopicPage> {
             ),
             Padding(
               padding: const EdgeInsets.only(top: 32, bottom: 32),
+              child:
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    OutlinedButton(onPressed: getImageFromCamera, style: OutlinedButton.styleFrom(shape: StadiumBorder()), child: Icon(Icons.add_a_photo)),
+                    OutlinedButton(onPressed: getImageFromGallery, style: OutlinedButton.styleFrom(shape: StadiumBorder()), child: Icon(Icons.photo_library)),
+                  ],
+                ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 32, bottom: 32),
               child: ElevatedButton(
                 key: Key('saveButton'),
                 onPressed: onFormSubmit,
@@ -106,5 +117,13 @@ class _TopicPageState extends State<TopicPage> {
   void onFormSubmit() {
     topic.save();
     Navigator.of(context).pop();
+  }
+
+  void getImageFromCamera() {
+    // TODO
+  }
+
+  void getImageFromGallery() {
+    // TODO
   }
 }
