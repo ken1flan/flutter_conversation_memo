@@ -1,10 +1,13 @@
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:path_provider_platform_interface/path_provider_platform_interface.dart';
+import '../supports/path_provider.dart';
 import '../supports/hive.dart';
 import 'package:flutter_conversation_memo/models/topic.dart';
 
 void main() async {
   setUpAll(() {
+    PathProviderPlatform.instance = FakePathProviderPlatform();
     initializeHive();
   });
 
