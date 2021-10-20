@@ -19,7 +19,6 @@ class TopicPage extends StatefulWidget {
 class _TopicPageState extends State<TopicPage> {
   Topic topic;
   List<Person> interestedPersons;
-  File _image;
   final picker = ImagePicker();
 
   _TopicPageState(topic) {
@@ -83,7 +82,12 @@ class _TopicPageState extends State<TopicPage> {
             ),
             Padding(
               padding: const EdgeInsets.only(top: 32, bottom: 0),
-              child: Container(width: 300, child: _image == null ? Text('No image selected.') : Image.file(_image),),
+              child: Container(
+                width: 300,
+                child: topic.image == null
+                    ? Text(localizations.noImageSelected)
+                    : Image.file(topic.image),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 0, bottom: 32),
@@ -136,7 +140,7 @@ class _TopicPageState extends State<TopicPage> {
     final pickedFile = await picker.pickImage(source: ImageSource.camera);
 
     setState(() {
-      _image = File(pickedFile.path);
+      topic.image = File(pickedFile.path);
     });
   }
 
@@ -144,7 +148,7 @@ class _TopicPageState extends State<TopicPage> {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
     setState(() {
-      _image = File(pickedFile.path);
+      topic.image = File(pickedFile.path);
     });
   }
 }

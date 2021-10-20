@@ -12,6 +12,7 @@ import 'package:flutter_conversation_memo/models/person.dart';
 const String topicBoxName = 'topicBox';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   await Topic.initialize();
   await Person.initialize();

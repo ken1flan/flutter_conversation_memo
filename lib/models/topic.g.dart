@@ -22,13 +22,13 @@ class TopicAdapter extends TypeAdapter<Topic> {
       fields[2] as String,
       fields[3] as DateTime,
       fields[4] as DateTime,
-    );
+    )..image_file_name = fields[5] as String;
   }
 
   @override
   void write(BinaryWriter writer, Topic obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.summary)
       ..writeByte(1)
@@ -38,7 +38,9 @@ class TopicAdapter extends TypeAdapter<Topic> {
       ..writeByte(3)
       ..write(obj.created_at)
       ..writeByte(4)
-      ..write(obj.updated_at);
+      ..write(obj.updated_at)
+      ..writeByte(5)
+      ..write(obj.image_file_name);
   }
 
   @override
