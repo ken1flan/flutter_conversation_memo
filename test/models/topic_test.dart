@@ -1,15 +1,16 @@
 import 'package:flutter_test/flutter_test.dart';
+import '../test_helper.dart';
 
-import '../supports/hive.dart';
+import 'dart:io';
 import 'package:flutter_conversation_memo/models/topic.dart';
 
 void main() async {
   setUpAll(() {
-    initializeHive();
+    TestHelper.setUpAll();
   });
 
-  tearDown(() async {
-    await tearDownHive();
+  tearDown(() {
+    TestHelper.tearDown();
   });
 
   group('.getAt(index)', () {
@@ -57,18 +58,22 @@ void main() async {
         Topic('omoroikoto', 'memo\nmemo', 'tag1 tag2').save();
       });
 
-      test('既存のレコードの内容を変更後、再取得したときに更新後のデータを取得できること', () {
+      test('既存のレコードの内容を変更後、再取得したときに更新後のデータを取得できること', () async {
         var topic = Topic.getAt(0);
 
         topic.summary = 'tanoshikattakoto';
         topic.memo = 'memo\nmemo\nmemo';
         topic.tags_string = 'tag9 tag8';
-        topic.save();
+        topic.image = File('test/fixtures/images/480x320.png');
+        await topic.save();
 
         var updatedTopic = Topic.getAt(0);
         expect(updatedTopic.summary, equals('tanoshikattakoto'));
         expect(updatedTopic.memo, equals('memo\nmemo\nmemo'));
         expect(updatedTopic.tags_string, equals('tag9 tag8'));
+        expect(updatedTopic.image.path,
+            equals('${updatedTopic.imageDir}/${updatedTopic.image_file_name}'));
+        expect(updatedTopic.image.existsSync(), isTrue);
         expect(topic.created_at, isInstanceOf<DateTime>());
         expect(topic.updated_at, isInstanceOf<DateTime>());
         expect(topic.updated_at.microsecondsSinceEpoch,
@@ -196,6 +201,78 @@ void main() async {
 
         print(topic.tags());
         expect(topic.tags(), equals(['tag1', 'tag2']));
+      });
+    });
+  });
+
+  group('#imageDir', () {
+    group('保存されていないとき', () {
+      var topic = Topic('omoroikoto', 'memo\nmemo', 'tag1 tag2');
+
+      test('NULLを返すこと', () {
+        expect(topic.imageDir, isNull);
+      });
+    });
+
+    group('保存されているとき', () {
+      setUp(() async {
+        await Topic('omoroikoto', 'memo\nmemo', 'tag1 tag2').save();
+      });
+
+      test('NULLを返すこと', () {
+        var topic = Topic.getAt(0);
+        expect(topic.imageDir.contains('topics/${topic.key}'), isTrue);
+      });
+    });
+  });
+
+  group('#image= / #image', () {
+    group('保存されていないとき', () {
+      test('保存されていないとき、未保存のファイルを返すこと', () {
+        var topic = Topic('omoroikoto', 'memo\nmemo', 'tag1 tag2');
+        topic.image = File('test/fixtures/images/480x320.png');
+
+        expect(topic.image.path, equals('test/fixtures/images/480x320.png'));
+      });
+
+      test('アプリのドキュメントディレクトリに保存されたファイルを返すこと', () async {
+        var topic = Topic('omoroikoto', 'memo\nmemo', 'tag1 tag2');
+        topic.image = File('test/fixtures/images/480x320.png');
+        await topic.save();
+
+        expect(topic.image.path.contains('topics/${topic.key}/480x320.png'),
+            isTrue);
+      });
+    });
+
+    group('保存されているとき', () {
+      setUp(() async {
+        var topic = Topic('omoroikoto', 'memo\nmemo', 'tag1 tag2');
+        topic.image = File('test/fixtures/images/480x320.png');
+        await topic.save();
+      });
+
+      test('アプリのドキュメントディレクトリに保存されたファイルを返すこと', () {
+        var topic = Topic.getAt(0);
+
+        expect(topic.image.path.contains('topics/${topic.key}/480x320.png'),
+            isTrue);
+      });
+
+      test('新たにファイルを設定したとき、アプリのドキュメントディレクトリに保存されたファイルを返すこと', () {
+        var topic = Topic.getAt(0);
+        topic.image = File('test/fixtures/images/480x320.jpg');
+
+        expect(topic.image.path, equals('test/fixtures/images/480x320.jpg'));
+      });
+
+      test('新たにファイルを設定して保存したとき、アプリのドキュメントディレクトリに保存されたファイルを返すこと', () async {
+        var topic = Topic.getAt(0);
+        topic.image = File('test/fixtures/images/480x320.jpg');
+        await topic.save();
+
+        expect(topic.image.path.contains('topics/${topic.key}/480x320.jpg'),
+            isTrue);
       });
     });
   });

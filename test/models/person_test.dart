@@ -1,15 +1,15 @@
 import 'package:flutter_test/flutter_test.dart';
+import '../test_helper.dart';
 
-import '../supports/hive.dart';
 import 'package:flutter_conversation_memo/models/person.dart';
 
 void main() async {
   setUpAll(() {
-    initializeHive();
+    TestHelper.setUpAll();
   });
 
-  tearDown(() async {
-    await tearDownHive();
+  tearDown(() {
+    TestHelper.tearDown();
   });
 
   group('.getAt(index)', () {

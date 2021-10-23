@@ -1,6 +1,7 @@
 {
   "save": "保存",
   "notFound": "まだありません。",
+  "noImageSelected": "画像が選択されていません。",
   "appTitle": "Topic Matcher",
   "topic": "話題",
   "topicSummary": "いいたいこと",

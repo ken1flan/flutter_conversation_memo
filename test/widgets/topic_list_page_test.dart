@@ -1,18 +1,18 @@
 import 'package:flutter_test/flutter_test.dart';
+import '../test_helper.dart';
+import '../widget_test_helper.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_conversation_memo/widgets/topic_list_page.dart';
 import 'package:flutter_conversation_memo/models/topic.dart';
-import '../supports/hive.dart';
-import '../widget_test_helper.dart';
 
 void main() async {
-  setUpAll(() async {
-    await initializeHive();
+  setUpAll(() {
+    TestHelper.setUpAll();
   });
 
-  tearDown(() async {
-    await tearDownHive();
+  tearDown(() {
+    TestHelper.tearDown();
   });
 
   group('Topicが0個のとき', () {

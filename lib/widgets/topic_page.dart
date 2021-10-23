@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_conversation_memo/models/topic.dart';
 import 'package:flutter_conversation_memo/models/person.dart';
@@ -17,6 +19,7 @@ class TopicPage extends StatefulWidget {
 class _TopicPageState extends State<TopicPage> {
   Topic topic;
   List<Person> interestedPersons;
+  final picker = ImagePicker();
 
   _TopicPageState(topic) {
     this.topic = topic;
@@ -78,6 +81,31 @@ class _TopicPageState extends State<TopicPage> {
               },
             ),
             Padding(
+              padding: const EdgeInsets.only(top: 32, bottom: 0),
+              child: Container(
+                width: 300,
+                child: topic.image == null
+                    ? Text(localizations.noImageSelected)
+                    : Image.file(topic.image),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 0, bottom: 32),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  OutlinedButton(
+                      onPressed: getImageFromCamera,
+                      style: OutlinedButton.styleFrom(shape: StadiumBorder()),
+                      child: Icon(Icons.add_a_photo)),
+                  OutlinedButton(
+                      onPressed: getImageFromGallery,
+                      style: OutlinedButton.styleFrom(shape: StadiumBorder()),
+                      child: Icon(Icons.photo_library)),
+                ],
+              ),
+            ),
+            Padding(
               padding: const EdgeInsets.only(top: 32, bottom: 32),
               child: ElevatedButton(
                 key: Key('saveButton'),
@@ -106,5 +134,21 @@ class _TopicPageState extends State<TopicPage> {
   void onFormSubmit() {
     topic.save();
     Navigator.of(context).pop();
+  }
+
+  void getImageFromCamera() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.camera);
+
+    setState(() {
+      topic.image = File(pickedFile.path);
+    });
+  }
+
+  void getImageFromGallery() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    setState(() {
+      topic.image = File(pickedFile.path);
+    });
   }
 }
