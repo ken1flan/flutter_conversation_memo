@@ -47,22 +47,25 @@ class PersonCard extends Card {
                     person.name,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  Row(
-                    children: [
-                      Text(timeago.format(person.updated_at, locale: 'ja'),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        Text(timeago.format(person.updated_at, locale: 'ja'),
+                            style: TextStyle(
+                              color: Theme.of(context).disabledColor,
+                              fontSize: 12,
+                            )),
+                        SizedBox(width: 5),
+                        Text(
+                          person.tags_string,
                           style: TextStyle(
                             color: Theme.of(context).disabledColor,
                             fontSize: 12,
-                          )),
-                      SizedBox(width: 5),
-                      Text(
-                        person.tags_string,
-                        style: TextStyle(
-                          color: Theme.of(context).disabledColor,
-                          fontSize: 12,
-                        ),
-                      )
-                    ],
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                   SizedBox(height: 5),
                 ],

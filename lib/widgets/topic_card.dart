@@ -48,21 +48,24 @@ class TopicCard extends Card {
                       topic.summary,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    Row(
-                      children: [
-                        Text(timeago.format(topic.updated_at, locale: 'ja'),
-                            style: TextStyle(
-                              color: Theme.of(context).disabledColor,
-                              fontSize: 12,
-                            )),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text(topic.tags_string,
-                            style: TextStyle(
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: [
+                          Text(timeago.format(topic.updated_at, locale: 'ja'),
+                              style: TextStyle(
                                 color: Theme.of(context).disabledColor,
-                                fontSize: 12)),
-                      ],
+                                fontSize: 12,
+                              )),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(topic.tags_string,
+                              style: TextStyle(
+                                  color: Theme.of(context).disabledColor,
+                                  fontSize: 12)),
+                        ],
+                      ),
                     ),
                     SizedBox(height: 5),
                   ]),
